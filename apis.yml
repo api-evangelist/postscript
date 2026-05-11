@@ -77,6 +77,10 @@ common:
     url: https://postscript.io/blog
   - type: Support
     url: https://help.postscript.io
+integrations:
+  - name: Postscript
+  - name: True Classic CaseStudy-FEATURE IMG
+  - name: Integration-hero_img
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
