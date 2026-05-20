@@ -51,6 +51,8 @@ apis:
       - type: Webhooks
         url: https://developers.postscript.io/docs/configuring-webhooks
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/postscriptio
   - type: Website
     url: https://postscript.io
   - type: Documentation
