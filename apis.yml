@@ -79,6 +79,8 @@ common:
     url: https://postscript.io/blog
   - type: Support
     url: https://help.postscript.io
+  - type: LLMsTxt
+    url: https://developers.postscript.io/llms.txt
 integrations:
   - name: Postscript
   - name: True Classic CaseStudy-FEATURE IMG
