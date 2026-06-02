@@ -2,13 +2,13 @@
   "repo": "postscript",
   "feeds": [
     {
-      "source": "https://postscript.io/blog",
-      "feed_url": "",
+      "source": "https://postscript.io/pricing",
+      "feed_url": "https://postscript.io/pricing",
       "title": "",
       "saved": 0,
-      "error": "no_feed"
+      "method": "none"
     }
   ],
-  "fetched": "2026-05-17T20:48:52Z",
+  "fetched": "2026-06-01T23:35:02Z",
   "post_count": 0
 }
