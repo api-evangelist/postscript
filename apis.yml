@@ -69,7 +69,7 @@ common:
     url: https://developers.postscript.io/reference
   - type: ChangeLog
     url: https://developers.postscript.io/changelog
-  - type: SDK
+  - type: SDKs
     url: https://developers.postscript.io/docs/javascript-sdk-api-reference
   - type: Integrations
     url: https://developers.postscript.io/docs/how-to-use-zapier-with-our-api
@@ -79,7 +79,7 @@ common:
     url: https://postscript.io/blog
   - type: Support
     url: https://help.postscript.io
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://developers.postscript.io/llms.txt
 integrations:
   - name: Postscript
