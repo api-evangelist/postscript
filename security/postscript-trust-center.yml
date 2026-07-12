@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://trust.postscript.io/
+url: https://trust.postscript.io/
+certifications:
+- SOC 2
+- GDPR
+evidence:
+- source: https://trust.postscript.io/
+  keywords:
+  - soc 2
+  - soc2
+  - trust center
+  - gdpr

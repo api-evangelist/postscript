@@ -51,6 +51,14 @@ apis:
       - type: Webhooks
         url: https://developers.postscript.io/docs/configuring-webhooks
 common:
+  - type: TrustCenter
+    url: security/postscript-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/postscript-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/postscript-domain-security.yml
+  - type: Authentication
+    url: authentication/postscript-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/postscriptio
   - type: Website
