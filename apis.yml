@@ -51,6 +51,8 @@ apis:
       - type: Webhooks
         url: https://developers.postscript.io/docs/configuring-webhooks
 common:
+  - type: AgenticAccess
+    url: agentic-access/postscript-agentic-access.yml
   - type: TrustCenter
     url: security/postscript-trust-center.yml
   - type: VulnerabilityDisclosure
