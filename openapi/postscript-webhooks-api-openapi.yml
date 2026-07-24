@@ -1,0 +1,106 @@
+openapi: 3.1.0
+info:
+  title: Postscript Events Webhooks API
+  description: 'The Postscript API enables developers to manage SMS subscribers, send
+
+    custom events, and configure webhooks for the Postscript SMS marketing
+
+    platform. This OpenAPI definition captures a representative subset of
+
+    the public v2 API.
+
+    Derived from https://developers.postscript.io/.
+
+    '
+  version: 2.0.0
+  contact:
+    name: Postscript
+    url: https://developers.postscript.io
+servers:
+- url: https://api.postscript.io
+  description: Postscript production API
+security:
+- BearerAuth: []
+tags:
+- name: Webhooks
+  description: Configure webhook subscriptions for Postscript events.
+paths:
+  /api/v2/webhooks:
+    get:
+      tags:
+      - Webhooks
+      summary: List webhooks
+      operationId: listWebhooks
+      responses:
+        '200':
+          description: A list of webhook subscriptions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  webhooks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Webhook'
+    post:
+      tags:
+      - Webhooks
+      summary: Create a webhook
+      operationId: createWebhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Webhook'
+      responses:
+        '201':
+          description: Webhook created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+  /api/v2/webhooks/{webhook_id}:
+    parameters:
+    - name: webhook_id
+      in: path
+      required: true
+      schema:
+        type: string
+    delete:
+      tags:
+      - Webhooks
+      summary: Delete a webhook
+      operationId: deleteWebhook
+      responses:
+        '204':
+          description: Webhook deleted
+components:
+  schemas:
+    Webhook:
+      type: object
+      required:
+      - url
+      - event_types
+      properties:
+        id:
+          type: string
+        url:
+          type: string
+          format: uri
+        event_types:
+          type: array
+          items:
+            type: string
+        active:
+          type: boolean
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Postscript uses bearer token authentication. Generate API keys from the
+
+        Postscript app under API Settings.
+
+        '

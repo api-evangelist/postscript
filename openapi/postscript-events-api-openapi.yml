@@ -1,0 +1,70 @@
+openapi: 3.1.0
+info:
+  title: Postscript Events API
+  description: 'The Postscript API enables developers to manage SMS subscribers, send
+
+    custom events, and configure webhooks for the Postscript SMS marketing
+
+    platform. This OpenAPI definition captures a representative subset of
+
+    the public v2 API.
+
+    Derived from https://developers.postscript.io/.
+
+    '
+  version: 2.0.0
+  contact:
+    name: Postscript
+    url: https://developers.postscript.io
+servers:
+- url: https://api.postscript.io
+  description: Postscript production API
+security:
+- BearerAuth: []
+tags:
+- name: Events
+  description: Send custom events for use in flows and triggers.
+paths:
+  /api/v2/events:
+    post:
+      tags:
+      - Events
+      summary: Send a custom event
+      description: Sends a custom event that can be used to trigger Postscript flows.
+      operationId: createEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '202':
+          description: Event accepted
+components:
+  schemas:
+    Event:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the custom event (for example browse_abandonment).
+        phone_number:
+          type: string
+        email:
+          type: string
+          format: email
+        properties:
+          type: object
+          additionalProperties: true
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Postscript uses bearer token authentication. Generate API keys from the
+
+        Postscript app under API Settings.
+
+        '

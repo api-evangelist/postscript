@@ -1,0 +1,177 @@
+openapi: 3.1.0
+info:
+  title: Postscript Events Subscribers API
+  description: 'The Postscript API enables developers to manage SMS subscribers, send
+
+    custom events, and configure webhooks for the Postscript SMS marketing
+
+    platform. This OpenAPI definition captures a representative subset of
+
+    the public v2 API.
+
+    Derived from https://developers.postscript.io/.
+
+    '
+  version: 2.0.0
+  contact:
+    name: Postscript
+    url: https://developers.postscript.io
+servers:
+- url: https://api.postscript.io
+  description: Postscript production API
+security:
+- BearerAuth: []
+tags:
+- name: Subscribers
+  description: Manage SMS subscribers.
+paths:
+  /api/v2/subscribers:
+    get:
+      tags:
+      - Subscribers
+      summary: List subscribers
+      description: Returns a paginated list of SMS subscribers.
+      operationId: listSubscribers
+      parameters:
+      - name: cursor
+        in: query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 50
+      responses:
+        '200':
+          description: A paginated list of subscribers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscribers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Subscriber'
+                  cursor:
+                    type: string
+    post:
+      tags:
+      - Subscribers
+      summary: Create a subscriber
+      operationId: createSubscriber
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriberCreate'
+      responses:
+        '201':
+          description: Subscriber created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscriber'
+  /api/v2/subscribers/{subscriber_id}:
+    parameters:
+    - $ref: '#/components/parameters/SubscriberId'
+    get:
+      tags:
+      - Subscribers
+      summary: Get a subscriber
+      operationId: getSubscriber
+      responses:
+        '200':
+          description: The subscriber record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscriber'
+    patch:
+      tags:
+      - Subscribers
+      summary: Update a subscriber
+      operationId: updateSubscriber
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subscriber'
+      responses:
+        '200':
+          description: Subscriber updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscriber'
+  /api/v2/subscribers/{subscriber_id}/unsubscribe:
+    parameters:
+    - $ref: '#/components/parameters/SubscriberId'
+    post:
+      tags:
+      - Subscribers
+      summary: Unsubscribe a subscriber
+      operationId: unsubscribeSubscriber
+      responses:
+        '200':
+          description: Subscriber unsubscribed
+components:
+  schemas:
+    Subscriber:
+      type: object
+      properties:
+        id:
+          type: string
+        phone_number:
+          type: string
+        email:
+          type: string
+          format: email
+        first_name:
+          type: string
+        last_name:
+          type: string
+        opt_in_status:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        properties:
+          type: object
+          additionalProperties: true
+    SubscriberCreate:
+      type: object
+      required:
+      - phone_number
+      properties:
+        phone_number:
+          type: string
+        email:
+          type: string
+          format: email
+        first_name:
+          type: string
+        last_name:
+          type: string
+        properties:
+          type: object
+          additionalProperties: true
+  parameters:
+    SubscriberId:
+      name: subscriber_id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Postscript uses bearer token authentication. Generate API keys from the
+
+        Postscript app under API Settings.
+
+        '
