@@ -6,7 +6,20 @@ description: >-
   shopping assistants alongside a developer API for building custom SMS
   experiences.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/postscript.png
 tags:
   - SMS
   - Marketing
@@ -21,35 +34,61 @@ created: '2025-01-01'
 modified: '2026-04-28'
 specificationVersion: '0.19'
 apis:
-  - aid: postscript:postscript-api
-    name: Postscript API
-    description: >-
-      The Postscript API enables developers to manage SMS subscribers, send
-      messages, configure keywords, trigger events, and integrate the Postscript
-      platform with external commerce and marketing systems.
-    humanURL: https://developers.postscript.io
-    tags:
-      - SMS
-      - Subscribers
-      - Messages
-      - Keywords
-      - Events
-      - Shop
-    properties:
-      - type: Documentation
-        url: https://developers.postscript.io
-      - type: GettingStarted
-        url: https://developers.postscript.io/docs/getting-started
-      - type: Authentication
-        url: https://developers.postscript.io/docs/api-authentication
-      - type: RateLimits
-        url: https://developers.postscript.io/docs/rate-limits
-      - type: APIReference
-        url: https://developers.postscript.io/reference
-      - type: ChangeLog
-        url: https://developers.postscript.io/changelog
-      - type: Webhooks
-        url: https://developers.postscript.io/docs/configuring-webhooks
+- aid: postscript:postscript-api
+  name: Postscript API
+  description: >-
+    The Postscript API enables developers to manage SMS subscribers, send messages, configure keywords,
+    trigger events, and integrate the Postscript platform with external commerce and marketing systems.
+  humanURL: https://developers.postscript.io
+  tags:
+  - SMS
+  - Subscribers
+  - Messages
+  - Keywords
+  - Events
+  - Shop
+  properties:
+  - type: Documentation
+    url: https://developers.postscript.io
+  - type: GettingStarted
+    url: https://developers.postscript.io/docs/getting-started
+  - type: Authentication
+    url: https://developers.postscript.io/docs/api-authentication
+  - type: RateLimits
+    url: https://developers.postscript.io/docs/rate-limits
+  - type: APIReference
+    url: https://developers.postscript.io/reference
+  - type: ChangeLog
+    url: https://developers.postscript.io/changelog
+  - type: Webhooks
+    url: https://developers.postscript.io/docs/configuring-webhooks
+- aid: postscript:postscript-events-api
+  name: Postscript Events API
+  description: Send custom events for use in flows and triggers.
+  humanURL: https://developers.postscript.io
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/postscript-events-api-openapi.yml
+- aid: postscript:postscript-subscribers-api
+  name: Postscript Subscribers API
+  description: Manage SMS subscribers.
+  humanURL: https://developers.postscript.io
+  tags:
+  - Subscribers
+  properties:
+  - type: OpenAPI
+    url: openapi/postscript-subscribers-api-openapi.yml
+- aid: postscript:postscript-webhooks-api
+  name: Postscript Webhooks API
+  description: Configure webhook subscriptions for Postscript events.
+  humanURL: https://developers.postscript.io
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/postscript-webhooks-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/postscript-agentic-access.yml
