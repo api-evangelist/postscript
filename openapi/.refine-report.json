@@ -1,0 +1,18 @@
+{
+  "provider": "postscript",
+  "sources": [
+    "postscript-events-api-openapi.yml",
+    "postscript-subscribers-api-openapi.yml",
+    "postscript-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "postscript-events-api-openapi.yml",
+    "postscript-subscribers-api-openapi.yml",
+    "postscript-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
