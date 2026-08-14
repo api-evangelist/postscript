@@ -1,23 +1,28 @@
 aid: postscript
 name: Postscript
 description: >-
-  Postscript is an SMS marketing and sales platform built for Shopify brands,
-  providing list growth tools, campaign delivery, RCS messaging, and AI-driven
-  shopping assistants alongside a developer API for building custom SMS
-  experiences.
+  Postscript is an SMS and RCS marketing platform built for Shopify brands, covering list growth,
+  campaign and automation delivery, conversational messaging, AI shopping assistants and TCPA
+  compliance. Its developer surface is the Partner API v2 at api.postscript.io, a twenty-operation
+  REST API authenticated with private API keys, through which partners and enterprise shops read and
+  update SMS subscribers, read opt-in keywords, push custom events into Flow Builder, send
+  promotional, transactional and conversational messages, manage webhook subscriptions for shop and
+  subscriber lifecycle events, and run compliance unsubscribe and redaction operations. A browser
+  JavaScript SDK carries the onsite opt-in popups, the checkout consent checkbox and browse-behaviour
+  event tracking.
 type: Index
 accessModel:
   pricing: freemium
   onboarding: self-serve
-  trial: false
+  trial: true
   try_now: true
   public: false
-  label: Freemium · Self-serve signup
+  label: Freemium · Self-serve signup · API access gated to Professional/Enterprise
   confidence: high
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
+  generated: '2026-08-13'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/postscript.png
 tags:
@@ -28,26 +33,35 @@ tags:
   - Shopify
   - RCS
   - Subscribers
+  - Webhooks
+  - Compliance
 url: >-
   https://raw.githubusercontent.com/api-evangelist/postscript/refs/heads/main/apis.yml
 created: '2025-01-01'
-modified: '2026-04-28'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 apis:
 - aid: postscript:postscript-api
-  name: Postscript API
+  name: Postscript Partner API
   description: >-
-    The Postscript API enables developers to manage SMS subscribers, send messages, configure keywords,
-    trigger events, and integrate the Postscript platform with external commerce and marketing systems.
+    The Postscript Partner API v2 enables partners and Shopify shops to manage SMS subscribers, read
+    opt-in keywords, send custom events into Flow Builder, send SMS and MMS messages, configure
+    webhook subscriptions, and run TCPA compliance operations. Authentication is a private API key
+    sent as a bearer token, with partners delegating to a shop through the X-Postscript-Shop-Token
+    header.
   humanURL: https://developers.postscript.io
+  baseURL: https://api.postscript.io
   tags:
   - SMS
   - Subscribers
   - Messages
   - Keywords
   - Events
-  - Shop
+  - Webhooks
+  - Compliance
   properties:
+  - type: OpenAPI
+    url: openapi/_original/postscript-partner-api-openapi.yml
   - type: Documentation
     url: https://developers.postscript.io
   - type: GettingStarted
@@ -62,33 +76,104 @@ apis:
     url: https://developers.postscript.io/changelog
   - type: Webhooks
     url: https://developers.postscript.io/docs/configuring-webhooks
-- aid: postscript:postscript-events-api
-  name: Postscript Events API
-  description: Send custom events for use in flows and triggers.
-  humanURL: https://developers.postscript.io
-  tags:
-  - Events
-  properties:
-  - type: OpenAPI
-    url: openapi/postscript-events-api-openapi.yml
 - aid: postscript:postscript-subscribers-api
   name: Postscript Subscribers API
-  description: Manage SMS subscribers.
-  humanURL: https://developers.postscript.io
+  description: >-
+    Read, filter, page and update a shop's SMS subscribers. Filters use suffixed operators
+    (__eq, __gt, __contains, __in) across created_at, updated_at, email, phone_number,
+    shopify_customer_id and ps_id.
+  humanURL: https://developers.postscript.io/reference/get-subscribers
+  baseURL: https://api.postscript.io
   tags:
   - Subscribers
   properties:
   - type: OpenAPI
     url: openapi/postscript-subscribers-api-openapi.yml
+  - type: Overlay
+    url: overlays/postscript-subscribers-api-overlay.yaml
+- aid: postscript:postscript-events-api
+  name: Postscript Events API
+  description: Send custom events for use in Postscript Flows and triggers.
+  humanURL: https://developers.postscript.io/reference/create-custom-event
+  baseURL: https://api.postscript.io
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/postscript-events-api-openapi.yml
+  - type: Overlay
+    url: overlays/postscript-events-api-overlay.yaml
+- aid: postscript:postscript-keywords-api
+  name: Postscript Keywords API
+  description: Read the opt-in keywords a shop has configured for subscriber acquisition and attribution.
+  humanURL: https://developers.postscript.io/reference/get-keywords
+  baseURL: https://api.postscript.io
+  tags:
+  - Keywords
+  properties:
+  - type: OpenAPI
+    url: openapi/postscript-keywords-api-openapi.yml
+  - type: Overlay
+    url: overlays/postscript-keywords-api-overlay.yaml
+- aid: postscript:postscript-messages-api
+  name: Postscript Messages API
+  description: >-
+    Send promotional, transactional or conversational SMS and MMS to an existing subscriber, and read
+    the resulting message request and sent message.
+  humanURL: https://developers.postscript.io/reference/create-message
+  baseURL: https://api.postscript.io
+  tags:
+  - Messages
+  - SMS
+  properties:
+  - type: OpenAPI
+    url: openapi/postscript-messages-api-openapi.yml
+  - type: Overlay
+    url: overlays/postscript-messages-api-overlay.yaml
 - aid: postscript:postscript-webhooks-api
   name: Postscript Webhooks API
-  description: Configure webhook subscriptions for Postscript events.
-  humanURL: https://developers.postscript.io
+  description: >-
+    Create, read, update and delete webhook subscriptions, fetch the Postscript-Signature signing
+    token, retrieve example event payloads and trigger test deliveries.
+  humanURL: https://developers.postscript.io/docs/configuring-webhooks
+  baseURL: https://api.postscript.io
   tags:
   - Webhooks
+  - Events
   properties:
   - type: OpenAPI
     url: openapi/postscript-webhooks-api-openapi.yml
+  - type: Overlay
+    url: overlays/postscript-webhooks-api-overlay.yaml
+  - type: Webhooks
+    url: asyncapi/postscript-webhooks.yml
+- aid: postscript:postscript-compliance-api
+  name: Postscript Compliance API
+  description: >-
+    TCPA opt-out and data redaction for a subscriber, addressable by subscriber id, phone, email or
+    Shopify customer id.
+  humanURL: https://developers.postscript.io/reference/unsubscribe
+  baseURL: https://api.postscript.io
+  tags:
+  - Compliance
+  - Subscribers
+  properties:
+  - type: OpenAPI
+    url: openapi/postscript-compliance-api-openapi.yml
+  - type: Overlay
+    url: overlays/postscript-compliance-api-overlay.yaml
+- aid: postscript:postscript-identity-api
+  name: Postscript Identity API
+  description: Verify which partner or shop the calling API token resolves to.
+  humanURL: https://developers.postscript.io/reference/verify-identity
+  baseURL: https://api.postscript.io
+  tags:
+  - Identity
+  properties:
+  - type: OpenAPI
+    url: openapi/postscript-identity-api-openapi.yml
+  - type: Overlay
+    url: overlays/postscript-identity-api-overlay.yaml
 common:
   - type: AgenticAccess
     url: agentic-access/postscript-agentic-access.yml
@@ -96,14 +181,50 @@ common:
     url: security/postscript-trust-center.yml
   - type: VulnerabilityDisclosure
     url: security/postscript-vulnerability-disclosure.yml
+  - type: Security
+    url: https://postscript.io/security
   - type: DomainSecurity
     url: security/postscript-domain-security.yml
   - type: Authentication
     url: authentication/postscript-authentication.yml
+  - type: Conventions
+    url: conventions/postscript-conventions.yml
+  - type: Conformance
+    url: conformance/postscript-conformance.yml
+  - type: ErrorCatalog
+    url: errors/postscript-error-codes.yml
+  - type: Lifecycle
+    url: lifecycle/postscript-lifecycle.yml
+  - type: StatusPage
+    url: https://status.postscript.io
+  - type: DataModel
+    url: data-model/postscript-data-model.yml
+  - type: Packages
+    url: packages/postscript-packages.yml
+  - type: Components
+    url: components/postscript-components.yml
+  - type: MCPServer
+    url: mcp/postscript-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/postscript-tool-crosswalk.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Webhooks
+    url: asyncapi/postscript-webhooks.yml
+  - type: LLMsTxt
+    url: llms/postscript-llms.txt
+  - type: Plans
+    url: plans/postscript-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/postscript-rate-limits.yml
+  - type: ChangeLog
+    url: changelog/postscript-changelog.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/postscriptio
   - type: Website
     url: https://postscript.io
+  - type: DeveloperPortal
+    url: https://developers.postscript.io
   - type: Documentation
     url: https://developers.postscript.io
   - type: GettingStarted
@@ -128,6 +249,16 @@ common:
     url: https://postscript.io/blog
   - type: Support
     url: https://help.postscript.io
+  - type: SignUp
+    url: https://postscript.io/partners-signup
+  - type: Login
+    url: https://app.postscript.io/login
+  - type: TermsOfService
+    url: https://postscript.io/terms-of-service
+  - type: APITermsOfService
+    url: https://postscript.io/api-terms-of-service
+  - type: PrivacyPolicy
+    url: https://postscript.io/privacy
   - type: LlmsText
     url: https://developers.postscript.io/llms.txt
 integrations:
@@ -137,3 +268,8 @@ integrations:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 33
+  pass: local-v1
