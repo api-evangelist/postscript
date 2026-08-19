@@ -1,0 +1,110 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/_original/postscript-partner-api-openapi.yml,
+  https://developers.postscript.io/docs/api-authentication,
+  https://developers.postscript.io/docs/compliance,
+  https://trust.postscript.io/
+provider: Postscript
+api: Postscript Partner API v2
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: >-
+    Postscript publishes per-operation OpenAPI 3.1.0 definitions on every page of
+    developers.postscript.io/reference. Note it publishes no single assembled document — the twenty
+    operations are only available as twenty separate fragments, which is why openapi/_original/
+    holds a merged copy.
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securityScheme in any published fragment; no authorization or token endpoint documented.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returned 404 on every Postscript host on 2026-08-13.
+- id: rfc6750-bearer
+  conforms: partial
+  evidence: >-
+    Credentials are sent as "Authorization: Bearer <key>" per RFC 6750 syntax, but the token is a
+    static private API key rather than an OAuth 2.0 access token, and no WWW-Authenticate challenge
+    is returned — api.postscript.io answers unauthenticated calls with a bare 401 and the body
+    "Missing Authorization header".
+- id: rfc7617-basic
+  conforms: true
+  evidence: Legacy authentication accepts Authorization Basic base64(private_key:) with an empty password.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use a proprietary {error_code, error_message, success} object with content type
+    application/json. No application/problem+json, no type URI.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header support, and no deprecation policy published.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returned 404 or 401 on all four Postscript hosts on 2026-08-13.
+- id: rfc8615-well-known
+  conforms: false
+  evidence: No /.well-known/ document is served on any Postscript host.
+- id: ietf-ratelimit-headers
+  conforms: false
+  evidence: >-
+    A published 15 req/sec limit and a 429 status, but no RateLimit-*, X-RateLimit-* or Retry-After
+    response header, so the limit is not machine-readable at runtime.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    A documented webhook surface with five event types, but no AsyncAPI document published anywhere.
+    Captured as a webhook catalog in asyncapi/postscript-webhooks.yml.
+- id: json-api
+  conforms: false
+  evidence: Plain JSON resource representations; no JSON:API document structure.
+- id: e164
+  conforms: partial
+  evidence: >-
+    Postscript recommends E.164 for subscriber phone numbers on create-custom-event but states other
+    formats are accepted.
+- id: webhook-hmac-signing
+  conforms: false
+  evidence: >-
+    Deliveries carry a Postscript-Signature header, but verification is a plain equality comparison
+    against a static account signing token fetched from GET /api/v2/webhooks/token — not an HMAC over
+    the payload, so it provides no tamper or replay protection.
+regulatory:
+- id: tcpa
+  conforms: true
+  evidence: >-
+    Postscript publishes a TCPA compliance page and enforces double opt-in on every subscriber added
+    through the API — a subscriber who does not reply to the confirmation message is not added to the
+    merchant's list. The confirmation text wording is fixed and not customizable.
+  docs: https://developers.postscript.io/docs/compliance
+- id: gdpr
+  conforms: true
+  evidence: >-
+    Named on the Postscript trust center, and backed by a live API operation — PATCH
+    /api/v2/compliance/redact redacts a subscriber by email, phone, Shopify customer id or Postscript
+    subscriber id and unsubscribes them if still active.
+  docs: https://trust.postscript.io/
+- id: ctia-carrier-guidelines
+  conforms: true
+  evidence: >-
+    Postscript states its list growth tools are hard-wired to follow TCPA, mobile carrier and other
+    regulatory guidelines, and provisions verified toll-free numbers and designated short codes
+    through the carriers.
+certifications:
+- id: soc2
+  published: true
+  source: https://trust.postscript.io/
+- id: iso27001
+  published: false
+- id: pci-dss
+  published: false
+- id: hipaa
+  published: false
+- id: fedramp
+  published: false
+summary:
+  standards_asserted: 14
+  conforming: 4
+  partial: 2
+  not_conforming: 8
+  compliance_program_published: true

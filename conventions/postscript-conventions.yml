@@ -1,0 +1,132 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developers.postscript.io/docs/api-authentication,
+  https://developers.postscript.io/docs/rate-limits,
+  https://developers.postscript.io/docs/configuring-webhooks,
+  https://developers.postscript.io/reference/new-object-identifiers,
+  openapi/_original/postscript-partner-api-openapi.yml
+provider: Postscript
+api: Postscript Partner API v2
+base_url: https://api.postscript.io
+authentication:
+  style: bearer-token
+  header: 'Authorization: Bearer <private_api_key>'
+  key_type: private API key (shops and partners each have their own)
+  key_prefixes:
+    shop: sk_
+    partner: sk_partner_
+    public: pk_
+  delegation_header: X-Postscript-Shop-Token
+  delegation_note: >-
+    A partner authenticates with its own partner key in Authorization and names the shop it is acting
+    for by putting that shop's private key in X-Postscript-Shop-Token. Shops calling for themselves
+    send only Authorization. Sending a shop token in Authorization without the partner token is the
+    documented cause of spurious plan-limitation errors.
+  legacy: >-
+    HTTP Basic is still supported — Authorization Basic base64(<private_api_key>:) with an empty
+    password.
+  docs: https://developers.postscript.io/docs/api-authentication
+  artifact: authentication/postscript-authentication.yml
+idempotency:
+  supported: false
+  key_header: null
+  note: >-
+    Postscript documents no idempotency key on any write operation. The closest thing is the optional
+    external_id field on POST /api/v2/events, described as "the unique id of the event on your
+    system" — the docs do not state that a repeated external_id is de-duplicated, and when it is
+    omitted Postscript mints its own id from the receive time, so it cannot be relied on as a
+    request-replay guard. Idempotency guidance in the docs is aimed at the CONSUMER: webhook
+    deliveries may repeat, so subscribers must handle the same event more than once.
+  consumer_side:
+    webhook_replay: possible
+    guidance: https://developers.postscript.io/docs/configuring-webhooks
+pagination:
+  style: page-number
+  parameters:
+    page: Page number of results to start from (GET /api/v2/subscribers)
+  response_fields: []
+  note: >-
+    Only the subscriber collection is paginated, via a `page` query parameter. No per-page size
+    parameter and no cursor or next-link field is documented, and the published 200 response for
+    get-subscribers carries an example rather than a schema, so the envelope shape is not machine-
+    readable from the spec.
+filtering:
+  style: suffixed-operator query parameters
+  operators: [__eq, __gt, __gte, __lt, __lte, __contains, __in]
+  fields: [created_at, updated_at, email, phone_number, shopify_customer_id, ps_id]
+  example: /api/v2/subscribers?created_at__gte=2026-01-01T00:00:00Z&email__contains=example.com
+sorting:
+  parameter: sort
+  format: '{field}__asc | {field}__desc'
+field_expansion:
+  supported: false
+metadata:
+  supported: true
+  field: properties
+  note: >-
+    Both subscribers and custom events carry a free-form `properties` object of key:value pairs.
+    Postscript infers the type of each value (string, boolean, integer, float, datetime string) and
+    exposes the properties in-app for segmentation and merge tags. Spaces in custom property names
+    have been allowed since 2023-02-02.
+request_tracing:
+  request_id_header: null
+  note: No request-id or correlation header is documented on responses.
+versioning:
+  scheme: uri-path
+  current: v2
+  path_prefix: /api/v2/
+  previous: v1
+  note: >-
+    v1 and v2 run side by side; the docs answer "Can I send events via both V1 and V2 API versions?"
+    with yes. v2 left beta on 2022-03-29. No date-based or header-based version negotiation.
+identifiers:
+  scheme: prefixed opaque string ids
+  prefixes:
+    s_: subscriber
+    shop_: shop
+    im_: incoming message
+  legacy: >-
+    v1 used unprefixed ids tied to a shop's API keys and would break if a shop rotated them. Legacy
+    ids are still accepted on v2 requests "for a period of time"; no sunset date is published.
+  docs: https://developers.postscript.io/reference/new-object-identifiers
+error_envelope:
+  shape: proprietary JSON object
+  fields:
+    error_code: integer, Postscript-assigned
+    error_message: human-readable string
+    success: boolean, false on error
+  content_type: application/json
+  rfc9457: false
+  example: '{"error_code": 3002, "error_message": "Rate limit exceeded", "success": false}'
+  artifact: errors/postscript-error-codes.yml
+rate_limit_signaling:
+  limit: 15 requests per second, per token
+  status_on_exhaustion: 429
+  headers: []
+  header_note: >-
+    Postscript publishes no RateLimit-*, X-RateLimit-* or Retry-After response header. The only
+    runtime signal is the 429 status plus the error_code 3002 envelope, so a client must infer its
+    remaining budget rather than read it.
+  guidance: exponential backoff with jitter
+  docs: https://developers.postscript.io/docs/rate-limits
+  artifact: rate-limits/postscript-rate-limits.yml
+webhook_conventions:
+  delivery: HTTPS POST, JSON body
+  envelope_fields: [webhook_id, resource_type, resource_id, event_time, event, event_data]
+  naming: resource.event / resource.subresource.event
+  expected_response: 200 (body ignored)
+  retry: every 5 minutes until a 200 is received, for up to 1 hour
+  signature_header: Postscript-Signature
+  signature_scheme: >-
+    Shared static token comparison — fetch the account's signing token from GET /api/v2/webhooks/token
+    and compare it to the Postscript-Signature header value. This is a shared-secret equality check,
+    not an HMAC over the payload, so it does not bind the signature to the request body.
+  artifact: asyncapi/postscript-webhooks.yml
+cross_references:
+  authentication: authentication/postscript-authentication.yml
+  errors: errors/postscript-error-codes.yml
+  problem_types: errors/postscript-problem-types.yml
+  lifecycle: lifecycle/postscript-lifecycle.yml
+  rate_limits: rate-limits/postscript-rate-limits.yml
+  data_model: data-model/postscript-data-model.yml

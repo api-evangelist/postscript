@@ -91,8 +91,6 @@ The Postscript API enables developers to manage SMS subscribers, send messages, 
 - [API Reference](https://developers.postscript.io/reference)
 - [Changelog](https://developers.postscript.io/changelog)
 - [Webhooks](https://developers.postscript.io/docs/configuring-webhooks)
-- [Postman Collection](collections/postscript.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/postscript.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ## Common Properties
 

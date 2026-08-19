@@ -1,0 +1,72 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developers.postscript.io/docs/configuring-webhooks,
+  https://developers.postscript.io/reference/example-event,
+  https://developers.postscript.io/reference/test-shop-webhook,
+  https://postscript.io/pricing
+provider: Postscript
+sandbox_available: false
+summary: >-
+  Postscript ships no sandbox and no test mode. There is one set of API keys per shop and one set per
+  partner, they are live, and every call they make touches the merchant's real subscriber list and can
+  send a real SMS billed at the merchant's per-message rate. There is no test/live key separation, no
+  test-mode prefix, no magic phone numbers, no test clock and no fixture tooling. What Postscript does
+  publish is a narrow set of webhook test affordances, recorded below, plus a 30-day trial of the
+  production platform.
+  NOTE: because there is no sandbox or console, no Sandbox pointer is wired into apis.yml — this file
+  records a verified absence, not a surface.
+key_separation:
+  test_mode: false
+  key_prefixes:
+    sk_: shop private key (live)
+    sk_partner_: partner private key (live)
+    pk_: shop public key — not valid for API authorization
+  note: >-
+    The pk_/sk_ pair looks like a live/test split but is not one: the public key is a front-end
+    identifier, not a test credential, and Postscript explicitly says only the private key authorizes
+    API requests.
+magic_values:
+  test_phone_numbers: []
+  test_cards: []
+  note: None published. Postscript does not document any reserved number range for safe test sends.
+time_simulation:
+  test_clock: false
+webhook_test_tooling:
+- name: shop.test event
+  type: event type
+  description: >-
+    A synthetic event type accepted by create-webhook-subscription and example-event, used to verify a
+    newly registered endpoint without waiting for real subscriber activity.
+- name: Example event payload
+  type: endpoint
+  operation: example-event
+  request: GET /api/v2/webhooks/example?event=shop.incoming_message
+  description: >-
+    Returns a representative payload for any subscribable event type, so a consumer can build and
+    unit-test its handler against a real Postscript-shaped body before going live.
+- name: Test shop webhook
+  type: endpoint
+  operation: test-shop-webhook
+  request: POST /api/v2/webhooks/test
+  description: Triggers a test delivery to the shop's registered callback URL. Returns 202.
+- name: Live end-to-end check
+  type: manual
+  description: >-
+    Postscript's documented go-live test is to text the shop's own number and confirm the
+    shop.incoming_message event arrives at the registered endpoint. This consumes a real message.
+trial:
+  available: true
+  length_days: 30
+  credit_usd: '100.00'
+  description: >-
+    A production trial, not a sandbox. The $100 credit is applied against message and carrier fees;
+    two keywords, automations, campaigns, segments, integrations and replies are all available. Sends
+    beyond the credit bill at the Starter rate.
+  source: https://postscript.io/pricing
+risks:
+- Every API key is a live key against a real merchant list.
+- create-message and create-custom-event can trigger billable SMS/MMS to real handsets.
+- >-
+  redact is irreversible and, per its own reference page, also unsubscribes a subscriber who still has
+  an active subscription — with no test environment in which to rehearse it.

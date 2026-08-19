@@ -1,59 +1,26 @@
-generated: '2026-07-15'
+generated: '2026-08-13'
 method: generated
-source: openapi/postscript-openapi.yml
+source: openapi/postscript-compliance-api-openapi.yml, openapi/postscript-events-api-openapi.yml,
+  openapi/postscript-identity-api-openapi.yml, openapi/postscript-keywords-api-openapi.yml,
+  openapi/postscript-messages-api-openapi.yml, openapi/postscript-subscribers-api-openapi.yml,
+  openapi/postscript-webhooks-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 9
+  operations: 20
   by_action_class:
-    connected: 3
-    acting: 6
+    acting: 9
+    connected: 11
   by_consequence:
-    read: 3
-    write: 5
+    write: 8
+    read: 11
     physical: 1
   human_in_the_loop_required: 0
 operations:
-- path: /api/v2/subscribers
-  method: get
-  operationId: listSubscribers
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v2/subscribers
-  method: post
-  operationId: createSubscriber
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /api/v2/subscribers/{subscriber_id}
-  method: get
-  operationId: getSubscriber
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /api/v2/subscribers/{subscriber_id}
+- path: /api/v2/compliance/redact
   method: patch
-  operationId: updateSubscriber
+  operationId: redact
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -67,9 +34,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v2/subscribers/{subscriber_id}/unsubscribe
-  method: post
-  operationId: unsubscribeSubscriber
+- path: /api/v2/compliance/unsubscribe
+  method: patch
+  operationId: unsubscribe
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -85,7 +52,53 @@ operations:
     audit: required
 - path: /api/v2/events
   method: post
-  operationId: createEvent
+  operationId: create-custom-event
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v2/me
+  method: get
+  operationId: verify-identity
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/keywords
+  method: get
+  operationId: get-keywords
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/keywords/{id}
+  method: get
+  operationId: get-keyword
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/message_requests
+  method: post
+  operationId: create-message
   x-agentic-access:
     action-class: acting
     consequence: physical
@@ -101,9 +114,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v2/webhooks
+- path: /api/v2/message_requests/{id}
   method: get
-  operationId: listWebhooks
+  operationId: get-message-request
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -111,9 +124,55 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /api/v2/sent_messages/{id}
+  method: get
+  operationId: get-sent-message
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/subscribers
+  method: get
+  operationId: get-subscribers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/subscribers/{id}
+  method: get
+  operationId: get-subscriber
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/subscribers/{id}
+  method: patch
+  operationId: update-subscriber-by-id
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /api/v2/webhooks
   method: post
-  operationId: createWebhook
+  operationId: create-webhook-subscription
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -127,9 +186,19 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v2/webhooks/{webhook_id}
+- path: /api/v2/webhooks
+  method: get
+  operationId: list-webhook-subscriptions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/webhooks/{id}
   method: delete
-  operationId: deleteWebhook
+  operationId: delete-webhook-subscription
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -143,3 +212,65 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /api/v2/webhooks/{id}
+  method: get
+  operationId: get-webhook-subscription
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/webhooks/{id}
+  method: patch
+  operationId: update-webhook-subscription
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v2/webhooks/example
+  method: get
+  operationId: example-event
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /api/v2/webhooks/test
+  method: post
+  operationId: test-shop-webhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v2/webhooks/token
+  method: get
+  operationId: get-webhook-signing-token
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none

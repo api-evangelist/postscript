@@ -1,0 +1,56 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developers.postscript.io/docs/rate-limits,
+  openapi/_original/postscript-partner-api-openapi.yml
+provider: Postscript
+api: Postscript Partner API v2
+format: proprietary
+rfc9457: false
+envelope:
+  content_type: application/json
+  fields:
+  - name: error_code
+    type: integer
+    description: Postscript-assigned numeric error code.
+  - name: error_message
+    type: string
+    description: Human-readable description of the failure.
+  - name: success
+    type: boolean
+    description: Always false on an error response.
+  example: '{"error_code": 3002, "error_message": "Rate limit exceeded", "success": false}'
+  note: >-
+    Postscript returns a flat proprietary error object rather than RFC 9457 problem+json. There is
+    no `type` URI, no `title`/`detail` split and no `instance`, so an agent cannot dereference an
+    error to documentation. The numeric code space is banded (the one published example sits in the
+    3xxx range) but Postscript publishes no error-code registry, so only codes that appear in the
+    documentation can be catalogued here.
+error_codes:
+- code: 3002
+  message: Rate limit exceeded
+  http_status: 429
+  cause: More than 15 requests per second were sent on the same token or partner/shop token pair.
+  action: >-
+    Retry on an exponential backoff schedule with jitter. No Retry-After header is returned, so the
+    delay must be chosen by the client.
+  source: https://developers.postscript.io/docs/rate-limits
+coverage:
+  codes_published: 1
+  note: >-
+    ONE numeric error code is documented anywhere on Postscript's developer site — 3002, in the rate
+    limits guide. Every other failure is described only by HTTP status in the per-operation OpenAPI
+    blocks (see errors/postscript-problem-types.yml), and those blocks carry an empty
+    `{"type":"object","properties":{}}` schema with an example of `{}`. There is no error reference
+    page. An integrator cannot enumerate Postscript's failure modes ahead of time, and an agent
+    cannot branch on a machine-readable error identity.
+gaps:
+- No published error-code reference page.
+- 4xx/5xx response bodies in the published spec fragments have empty schemas.
+- No RFC 9457 problem+json.
+- No documented error type URIs.
+- No 5xx responses documented on any operation.
+cross_references:
+  problem_types: errors/postscript-problem-types.yml
+  conventions: conventions/postscript-conventions.yml
+  rate_limits: rate-limits/postscript-rate-limits.yml

@@ -1,0 +1,67 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.postscript.io/docs/javascript-sdk-api-reference
+note: >-
+  Postscript ships exactly one first-party client library: a browser JavaScript SDK distributed from
+  its own CDN host (sdk.postscript.io) and installed automatically by the Postscript Shopify app.
+  There is no first-party package on npm, PyPI, RubyGems, Packagist, crates.io, NuGet, Maven Central
+  or pkg.go.dev — an unauthenticated npm registry search for "postscript sms" (2026-08-13) returned
+  only third-party work (@sunrise-integration/postscript-sms 1.0.0, published 2021-12-09, and
+  n8n-nodes-postscript 1.0.0, published 2026-04-25), neither of which is published by Postscript.
+packages:
+- language: javascript
+  registry: cdn
+  name: postscript-sdk
+  url: https://sdk.postscript.io/sdk.bundle.js
+  install: '<script src="https://sdk.postscript.io/sdk.bundle.js"></script>'
+  docs: https://developers.postscript.io/docs/javascript-sdk-api-reference
+  official: true
+  version: null
+  published: null
+  note: >-
+    Browser SDK exposed as window.postscript (identify, getSubscriberId, event) plus the onsite
+    opt-in popups and checkout opt-in checkbox. Distribution is a single unpinned CDN URL — there is
+    no version in the path and no registry metadata endpoint to query, so a consumer cannot tell
+    which build they are loading and neither can we. A direct GET of the bundle from outside a
+    merchant storefront returned HTTP 403 on 2026-08-13, so no version string could be read from
+    the artifact either. version/published recorded as null: checked, nothing publishable to record.
+third_party:
+- language: javascript
+  registry: npm
+  name: '@sunrise-integration/postscript-sms'
+  url: https://www.npmjs.com/package/@sunrise-integration/postscript-sms
+  official: false
+  version: 1.0.0
+  published: '2021-12-09'
+  note: Shogun Frontend integration published by Sunrise Integration, not by Postscript.
+- language: javascript
+  registry: npm
+  name: n8n-nodes-postscript
+  url: https://www.npmjs.com/package/n8n-nodes-postscript
+  official: false
+  version: 1.0.0
+  published: '2026-04-25'
+  note: n8n community node published by Velocity-BPA, not by Postscript.
+registries_checked:
+- registry: npm
+  result: no first-party package
+- registry: pypi
+  result: no first-party package
+- registry: rubygems
+  result: no first-party package
+- registry: packagist
+  result: no first-party package
+- registry: crates.io
+  result: no first-party package
+- registry: nuget
+  result: no first-party package
+- registry: maven-central
+  result: no first-party package
+- registry: pkg.go.dev
+  result: no first-party package
+source_code:
+  github_org: null
+  note: >-
+    No Postscript GitHub organization exists — api.github.com/orgs/{postscript, postscriptio,
+    postscript-io, PostscriptIO} all returned HTTP 404 on 2026-08-13. Postscript publishes no
+    open-source client code.

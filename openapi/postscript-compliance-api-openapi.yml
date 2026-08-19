@@ -1,0 +1,167 @@
+openapi: 3.1.0
+info:
+  title: Postscript Compliance API
+  description: The Postscript Partner API (v2) lets partners and Shopify shops manage SMS subscribers, send custom events
+    into Flows, send transactional and conversational messages, read opt-in keywords, configure webhook subscriptions, and
+    run TCPA compliance operations (unsubscribe, redact). Harvested verbatim from the per-operation OpenAPI definitions published
+    on https://developers.postscript.io/reference.
+  version: '2.0'
+  contact:
+    name: Postscript Developer Support
+    email: developersupport@postscript.io
+    url: https://developers.postscript.io
+  termsOfService: https://postscript.io/api-terms-of-service
+servers:
+- url: https://api.postscript.io
+security:
+- sec0: []
+tags:
+- name: Compliance
+  description: TCPA compliance operations — unsubscribe and redact a subscriber.
+paths:
+  /api/v2/compliance/redact:
+    patch:
+      summary: Redact
+      description: 'Note: When passed an email, phone number, Shopify customer ID, or Postscript subscriber ID, this endpoint
+        will also unsubscribe the subscriber if they have an active subscription'
+      operationId: redact
+      parameters:
+      - name: X-Postscript-Shop-Token
+        in: header
+        description: Shop API Token. **Required for partners**. This header should be used only by partners. Shops should
+          include their API token in the *Authorization* header.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                postscript_subscriber_id:
+                  type: string
+                  description: ID of the subscriber you'd like to redact.
+                shopify_customer_id:
+                  type: string
+                  description: A shopify customer id of the subscriber you'd like to redact.
+                email:
+                  type: string
+                  description: An email of the subscriber you'd like to redact.
+                phone_number:
+                  type: string
+                  description: A phone number of the subscriber you'd like to redact.
+      responses:
+        '202':
+          description: '202'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"message\": \"OK\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: OK
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"errors\": [\n        {\n            \"loc\": [],\n            \"msg\": \"Access denied.\
+                    \ You do not have permissions to access the requested resource.\",\n            \"type\": \"v2.access_denied\"\
+                    \n        }\n    ]\n}"
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        loc:
+                          type: array
+                        msg:
+                          type: string
+                          example: Access denied. You do not have permissions to access the requested resource.
+                        type:
+                          type: string
+                          example: v2.access_denied
+      deprecated: false
+      tags:
+      - Compliance
+  /api/v2/compliance/unsubscribe:
+    patch:
+      summary: Unsubscribe
+      description: Opt outs subscribers from Postscript messaging.
+      operationId: unsubscribe
+      parameters:
+      - name: X-Postscript-Shop-Token
+        in: header
+        description: Shop API Token. **Required for partners**. This header should be used only by partners. Shops should
+          include their API token in the *Authorization* header.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                postscript_subscriber_id:
+                  type: string
+                  description: ID of the subscriber you'd like to opt out.
+                phone_number:
+                  type: string
+                  description: A phone number of the subscriber you'd like to opt out.
+      responses:
+        '202':
+          description: '202'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"message\": \"OK\"\n}"
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: OK
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"errors\": [\n        {\n            \"loc\": [],\n            \"msg\": \"Access denied.\
+                    \ You do not have permissions to access the requested resource.\",\n            \"type\": \"v2.access_denied\"\
+                    \n        }\n    ]\n}"
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        loc:
+                          type: array
+                        msg:
+                          type: string
+                          example: Access denied. You do not have permissions to access the requested resource.
+                        type:
+                          type: string
+                          example: v2.access_denied
+      deprecated: false
+      tags:
+      - Compliance
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: bearer

@@ -1,0 +1,73 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developers.postscript.io/docs/javascript-sdk-api-reference,
+  https://developers.postscript.io/docs/sdk-events,
+  https://developers.postscript.io/docs/how-to-trigger-browse-abandonment-events-via-sdk,
+  https://postscript.io/pricing
+provider: Postscript
+description: >-
+  Postscript ships one client-side bundle, loaded from its own CDN, that carries both an imperative
+  JavaScript API (window.postscript) and a set of hosted, merchandiser-configured UI surfaces —
+  desktop and mobile opt-in popups, the checkout opt-in checkbox and the TCPA consent language that
+  must accompany them. On Shopify the bundle is injected by the Postscript app; non-Shopify merchants
+  add the script tag themselves.
+loader:
+  script: https://sdk.postscript.io/sdk.bundle.js
+  global: window.postscript
+  install_shopify: Injected automatically by the Postscript Shopify app.
+  install_other: Add the script tag to the storefront theme.
+  versioning: unpinned — the URL carries no version segment
+families:
+- name: Opt-in surfaces
+  type: hosted UI
+  configured_in: Postscript dashboard
+  components:
+  - name: Desktop popup
+    description: Onsite list-growth modal shown on desktop, with built-in TCPA consent copy.
+  - name: Mobile popup
+    description: Onsite list-growth modal shown on mobile.
+  - name: Checkout opt-in checkbox
+    description: SMS consent checkbox rendered in the checkout flow.
+  - name: Onsite Opt-in
+    description: Inline opt-in surface for storefront pages.
+  note: >-
+    Appearance, targeting and copy are configured by the merchant in the Postscript app, not through
+    props in the storefront code. There is no published component API for them.
+- name: Identity and event API
+  type: imperative JavaScript
+  components:
+  - name: window.postscript.identify
+    signature: 'window.postscript.identify({ phone: "555-555-5555" })'
+    description: >-
+      Looks a subscriber up by phone and cookies the browser against them. Returns whether a
+      subscriber was found and cookied.
+  - name: window.postscript.getSubscriberId
+    signature: window.postscript.getSubscriberId()
+    description: Returns the Postscript subscriber id for the current visitor, if known.
+  - name: window.postscript.event
+    signature: window.postscript.event('event_name', payload)
+    description: >-
+      Fires a browse-behaviour event for the cookied subscriber. Supported names are page_view
+      (Subscriber Viewed Product) and add_to_cart (Product Added to Cart), which drive the browse
+      abandonment automations.
+    payload_fields: [shop_id, url, search_params, page_type, referrer, resource]
+    resource_fields: [category, product_title, variant_title, price_in_cents, resource_id,
+      resource_type, sku, variant_id]
+- name: SDK events
+  type: browser events
+  docs: https://developers.postscript.io/docs/sdk-events
+  description: >-
+    Events the SDK emits back into the page so a storefront can react to Postscript UI activity
+    (popup lifecycle and subscription outcomes).
+notes:
+- >-
+  These are storefront components, not API-console components — there is no embeddable dashboard,
+  no hosted developer console and no embedded analytics surface.
+- >-
+  The bundle is the only distribution channel for the SDK; there is no npm package (see
+  packages/postscript-packages.yml).
+- >-
+  A direct GET of the bundle from outside a merchant storefront returned HTTP 403 on 2026-08-13, so
+  the component surface documented here is read from Postscript's own reference pages rather than
+  from the shipped code.

@@ -1,70 +1,116 @@
 openapi: 3.1.0
 info:
   title: Postscript Events API
-  description: 'The Postscript API enables developers to manage SMS subscribers, send
-
-    custom events, and configure webhooks for the Postscript SMS marketing
-
-    platform. This OpenAPI definition captures a representative subset of
-
-    the public v2 API.
-
-    Derived from https://developers.postscript.io/.
-
-    '
-  version: 2.0.0
+  description: The Postscript Partner API (v2) lets partners and Shopify shops manage SMS subscribers, send custom events
+    into Flows, send transactional and conversational messages, read opt-in keywords, configure webhook subscriptions, and
+    run TCPA compliance operations (unsubscribe, redact). Harvested verbatim from the per-operation OpenAPI definitions published
+    on https://developers.postscript.io/reference.
+  version: '2.0'
   contact:
-    name: Postscript
+    name: Postscript Developer Support
+    email: developersupport@postscript.io
     url: https://developers.postscript.io
+  termsOfService: https://postscript.io/api-terms-of-service
 servers:
 - url: https://api.postscript.io
-  description: Postscript production API
 security:
-- BearerAuth: []
+- sec0: []
 tags:
 - name: Events
-  description: Send custom events for use in flows and triggers.
+  description: Send custom events for use in Postscript Flows and triggers.
 paths:
   /api/v2/events:
     post:
-      tags:
-      - Events
-      summary: Send a custom event
-      description: Sends a custom event that can be used to trigger Postscript flows.
-      operationId: createEvent
+      summary: Create Custom Event
+      description: Send a Custom Event to use in Flows
+      operationId: create-custom-event
+      parameters:
+      - name: X-Postscript-Shop-Token
+        in: header
+        description: Shop API Token. **Required for partners**. This header should be used *only* by partners. Shops should
+          include their API token in the *Authorization* header.
+        schema:
+          type: string
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Event'
+              type: object
+              required:
+              - type
+              properties:
+                type:
+                  type: string
+                  description: 'The type of event that you are creating. This is the name of the event that will show in the
+                    Postscript application. **Note:** when creating this event, we will *automatically* prefix your partner/shop
+                    name in front of the event. For example, if sending an event called "OrderPlaced", we''ll show it in our
+                    UI as "[Your Partner/Shop Name] - OrderPlaced" to distinguish it from others of a similar name. We accept
+                    the follow characters in the value field: lowercase letters (a-z), uppercase letters (A-Z), digits (0-9),
+                    and underscores (_).'
+                subscriber_id:
+                  type: string
+                  description: The ID of the subscriber that you are creating the event for.
+                phone:
+                  type: string
+                  description: The phone number of the subscriber that you are creating the event for. E.164 format is recommended,
+                    but other formats will be accepted.
+                email:
+                  type: string
+                  description: The email of the subscriber that you are creating the event for.
+                occurred_at:
+                  type: string
+                  description: 'When the event occurred. This parameter is optional but allows you to set the exact time that
+                    the event occurred on your system. If it is not sent to us, we will just use the current time when we
+                    receive it. The following UTC time format is supported: %Y-%m-%d %H:%M:%S.%f'
+                  format: date
+                properties:
+                  type: object
+                  description: These are the properties of the event. These properties will be exposed in the Postscript platform
+                    for things like filtering and merge tags to merchants.
+                  properties:
+                    key:
+                      type: string
+                      description: Properties can be key:value pairs. We will attempt to choose the appropriate data type
+                        for the value depending on what you send us. We currently accept strings, booleans, integers, floats,
+                        and datetime strings.
+                      default: value
+                external_id:
+                  type: string
+                  description: The unique id of the event on your system. This is an optional field. If a value is not provided,
+                    we will create a default id ourselves based on time of event received.
       responses:
         '202':
-          description: Event accepted
+          description: '202'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n\t\"event_ids\": [\"1234-abcd-5678\"]\n}"
+              schema:
+                type: object
+                properties:
+                  event_ids:
+                    type: array
+                    items:
+                      type: string
+                      example: 1234-abcd-5678
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Events
 components:
-  schemas:
-    Event:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the custom event (for example browse_abandonment).
-        phone_number:
-          type: string
-        email:
-          type: string
-          format: email
-        properties:
-          type: object
-          additionalProperties: true
   securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-      description: 'Postscript uses bearer token authentication. Generate API keys from the
-
-        Postscript app under API Settings.
-
-        '
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: bearer

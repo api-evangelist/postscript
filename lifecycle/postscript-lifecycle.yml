@@ -1,0 +1,67 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developers.postscript.io/changelog,
+  https://developers.postscript.io/reference/new-object-identifiers,
+  https://status.postscript.io,
+  https://postscript.io/api-terms-of-service
+provider: Postscript
+api: Postscript Partner API v2
+versioning:
+  scheme: uri-path
+  current: v2
+  path_prefix: /api/v2/
+  previous: v1
+  parallel_versions: true
+  ga_date: '2022-03-29'
+  docs: https://developers.postscript.io/changelog/v20-api-is-out-of-beta
+  note: >-
+    v2 left beta on 2022-03-29 and runs alongside v1; the FAQ "Can I send events via both V1 and V2
+    API versions?" is answered yes. There is no header or date-based version negotiation and no
+    published date for v1 retirement.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    Postscript publishes no deprecation policy, no sunset schedule and no RFC 8594 Sunset/Deprecation
+    header support. The only deprecation-shaped statement in the developer docs is on the New Object
+    Identifiers page: unprefixed v1 identifiers will be accepted "for a period of time" and callers
+    should migrate to the prefixed ids (s_, shop_, im_) "as soon as you can" — an open-ended
+    intention with no date attached. No operation in the harvested OpenAPI carries deprecated: true.
+deprecated_operations: []
+status_page:
+  url: https://status.postscript.io
+  platform: Atlassian Statuspage
+  http_status: 200
+  checked: '2026-08-13'
+  note: Real-time and historical system performance for the Postscript platform.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime commitment is published. The Enterprise tier is sold with "Contact Sales
+    for custom pricing" and any availability commitment would be contractual.
+support:
+  developer_email: developersupport@postscript.io
+  general_email: support@postscript.io
+  sales_email: sales@postscript.io
+  help_center: https://help.postscript.io
+  hours: Live chat Monday-Friday 06:00-17:00 PT
+terms:
+  api_terms_of_service: https://postscript.io/api-terms-of-service
+  privacy_policy: https://postscript.io/privacy
+  note: >-
+    Postscript publishes a dedicated API Terms of Service separate from the platform terms, and the
+    developer introduction states that using the API constitutes agreement to it.
+change_communication:
+  changelog: https://developers.postscript.io/changelog
+  changelog_feed: https://developers.postscript.io/changelog.rss
+  latest_entry: '2023-03-27'
+  note: >-
+    The developer changelog carries a working RSS feed but its most recent entry is dated
+    2023-03-27, more than three years before this pass. API change communication has effectively
+    stopped even though the product has continued to ship (RCS, Shopper, Postscript AI all appear on
+    the marketing site and in none of the developer changelog).
+  artifact: changelog/postscript-changelog.yml

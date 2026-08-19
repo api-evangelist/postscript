@@ -1,0 +1,111 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://developers.postscript.io/docs/configuring-webhooks,
+  https://developers.postscript.io/reference/webhook-events,
+  https://developers.postscript.io/reference/example-event
+spec_type: none
+asyncapi_published: false
+asyncapi_note: >-
+  Postscript publishes no AsyncAPI document. The GitHub org does not exist, /asyncapi.yaml and
+  /asyncapi.json were not served on any host, and no event-catalog spec is linked from the docs.
+  This file captures the webhook surface the provider genuinely documents; nothing here is a
+  generated AsyncAPI standing in for a spec Postscript never wrote.
+provider: Postscript
+surface: webhooks
+transport:
+  protocol: https
+  method: POST
+  content_type: application/json
+  direction: Postscript -> subscriber endpoint
+subscription:
+  model: API-managed subscriptions, one event type per subscription
+  create: POST /api/v2/webhooks (create-webhook-subscription)
+  list: GET /api/v2/webhooks (list-webhook-subscriptions)
+  read: GET /api/v2/webhooks/{id} (get-webhook-subscription)
+  update: PATCH /api/v2/webhooks/{id} (update-webhook-subscription)
+  delete: DELETE /api/v2/webhooks/{id} (delete-webhook-subscription)
+  fields:
+    callback_url: Destination URL for webhook deliveries (HTTPS only). Required.
+    event: Event type to subscribe to. Required.
+    headers: Optional custom key:value pairs sent as headers on every callback.
+  spec: openapi/postscript-webhooks-api-openapi.yml
+envelope:
+  fields:
+  - {name: webhook_id, type: string, description: UUID of the webhook subscription that produced this delivery.}
+  - {name: resource_type, type: string, description: 'Resource the event is about, e.g. shop.'}
+  - {name: resource_id, type: string, description: 'Prefixed id of that resource, e.g. shop_1234567abcd.'}
+  - {name: event_time, type: string, description: ISO 8601 timestamp of the event.}
+  - {name: event, type: string, description: Dotted event name.}
+  - {name: event_data, type: object, description: Event-specific payload.}
+  example: |-
+    {
+      "webhook_id": "89066f0a-eb36-4ed8-b98c-606e6dcac715",
+      "resource_type": "shop",
+      "resource_id": "shop_1234567abcd",
+      "event_time": "2021-11-04T21:52:41.025455",
+      "event": "shop.incoming_message",
+      "event_data": {
+        "id": "im_1b2a005a386281c9",
+        "subscriber_id": "s_1234567abcd",
+        "shop_id": "shop_1234567abcd",
+        "is_opt_out": false,
+        "shopify_customer_id": null,
+        "from_number": "+15555555555",
+        "created_at": "2021-11-04T21:52:41.025455",
+        "body": "Hello, world"
+      }
+    }
+naming_convention:
+  pattern: resource.event
+  nested_pattern: resource.subresource.event
+  note: Postscript states more event types may be added at any time and consumers must not assume this list is closed.
+events:
+- name: shop.test
+  description: Synthetic event used to verify a newly registered endpoint.
+  subscribable: true
+- name: shop.incoming_message
+  description: >-
+    An inbound text message was sent to the shop. Keyword replies and subscriber lifecycle messages
+    may not surface here; ordinary replies do.
+  subscribable: true
+  event_data_fields: [id, subscriber_id, shop_id, is_opt_out, shopify_customer_id, from_number, created_at, body]
+- name: shop.subscriber.opt_in
+  description: A subscriber opted in to promotional messages, most commonly by replying to the confirmation text.
+  subscribable: true
+- name: shop.subscriber.opt_out
+  description: A subscriber opted out of receiving texts from the shop.
+  subscribable: true
+- name: shop.email_collected
+  description: An email address was collected through a Postscript popup.
+  subscribable: true
+  note: >-
+    The subscription enum published on create-webhook-subscription spells this event
+    "shop.shop.email_collected"; the event catalog page and the example-event enum both spell it
+    "shop.email_collected". Recorded as published — the discrepancy is Postscript's, and a consumer
+    should expect to try both.
+delivery:
+  expected_response: 200 (response body ignored)
+  retry_interval: every 5 minutes until a 200 is received
+  retry_window: up to 1 hour
+  at_least_once: true
+  consumer_guidance: >-
+    Postscript states the same event with the same data may be delivered more than once and requires
+    the consumer to be idempotent. There is no delivery id or sequence number beyond webhook_id,
+    which identifies the subscription rather than the delivery.
+security:
+  header: Postscript-Signature
+  scheme: shared-token equality
+  token_source: GET /api/v2/webhooks/token (get-webhook-signing-token)
+  verification: >-
+    Fetch the account's signing token from the API, store it, and compare it to the value of the
+    Postscript-Signature header on each delivery. Treat a missing or mismatched header as
+    unauthenticated.
+  weakness: >-
+    This is a static shared secret echoed in a header, not an HMAC computed over the request body
+    and a timestamp. It proves the caller knows the token but does not bind the signature to the
+    payload, so it offers no replay or tamper protection once a delivery has been observed.
+testing:
+  example_payload: GET /api/v2/webhooks/example?event=<event> (example-event)
+  test_delivery: POST /api/v2/webhooks/test (test-shop-webhook)
+  live_test: Send a text message to the shop's number and expect shop.incoming_message.

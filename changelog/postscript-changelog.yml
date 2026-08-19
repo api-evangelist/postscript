@@ -1,0 +1,97 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.postscript.io/changelog
+feed: https://developers.postscript.io/changelog.rss
+provider: Postscript
+api: Postscript Partner API v2
+scheme:
+  versioning: uri-path (v1, v2)
+  entry_style: dated post per change, no per-entry version number
+  current_version: v2
+staleness:
+  latest_entry: '2023-03-27'
+  days_since_latest_at_capture: 1235
+  entries_captured: 10
+  note: >-
+    The developer changelog has a live RSS feed and ten entries spanning 2022-02-04 to 2023-03-27,
+    and nothing since. Postscript has shipped RCS, Shopper and a whole Postscript AI product line in
+    the meantime, all announced on the marketing site and none of it reflected here. The changelog is
+    present and machine-readable but no longer current, which is a different failure from not having
+    one — an integrator polling this feed would conclude the API is frozen.
+entries:
+- date: '2023-03-27'
+  title: Custom Events API
+  type: addition
+  breaking: false
+  url: https://developers.postscript.io/changelog/custom-events-beta-release
+  highlights: >-
+    Beta release of the Custom Events API (POST /api/v2/events). Partners send arbitrary events and
+    merchants consume them in Flow Builder. Replaces the v1 Triggers model, which required partners
+    to register each trigger before use.
+- date: '2023-03-20'
+  title: 'New: Collected Email Webhook Events'
+  type: addition
+  breaking: false
+  url: https://developers.postscript.io/changelog/new-collected-email-webhook-events
+  highlights: >-
+    New shop.email_collected webhook event, fired whenever an email is captured by a Postscript
+    popup, whether or not the visitor also becomes an SMS subscriber.
+- date: '2023-02-02'
+  title: Spaces are now allowed in custom properties!
+  type: addition
+  breaking: false
+  url: https://developers.postscript.io/changelog/spaces-are-now-allowed-in-custom-properties
+  highlights: Custom property names on subscribers and events may now contain spaces.
+- date: '2022-12-02'
+  title: Added Email Support for all Subscriber Endpoints!
+  type: addition
+  breaking: false
+  url: https://developers.postscript.io/changelog/added-email-saving-support-in-v1-and-v2
+  highlights: Email became a first-class field across the v1 and v2 subscriber endpoints.
+- date: '2022-10-06'
+  title: Added email field to Subscriber Update endpoints
+  type: addition
+  breaking: false
+  url: https://developers.postscript.io/changelog/added-email-field-to-subscriber-update-endpoints
+  highlights: Subscriber update accepts an email field.
+- date: '2022-04-11'
+  title: Added Docs for Our JavaScript SDK!
+  type: documentation
+  breaking: false
+  url: https://developers.postscript.io/changelog/added-docs-for-our-javascript-sdk
+  highlights: Published the reference for the browser SDK exposed as window.postscript.
+- date: '2022-03-29'
+  title: v2.0 API is out of beta!
+  type: release
+  breaking: false
+  url: https://developers.postscript.io/changelog/v20-api-is-out-of-beta
+  highlights: >-
+    v2 became the stable version, with partners and shops encouraged to migrate from v1 "as soon as
+    convenient". No v1 sunset date was given then or since.
+- date: '2022-03-29'
+  title: Subscriber Lifecycle Webhook Events
+  type: addition
+  breaking: false
+  url: https://developers.postscript.io/changelog/subscriber-lifecycle-webhook-events
+  highlights: Added the shop.subscriber.opt_in and shop.subscriber.opt_out webhook events.
+- date: '2022-02-10'
+  title: Transactional Trigger Support
+  type: addition
+  breaking: false
+  url: https://developers.postscript.io/changelog/transactional-trigger-support
+  highlights: >-
+    transactional_allowed flag on the v1 Trigger endpoints, letting a partner mark a trigger as
+    eligible for transactional messaging where the shop has it enabled.
+- date: '2022-02-04'
+  title: Webhook Endpoints
+  type: addition
+  breaking: false
+  url: https://developers.postscript.io/changelog/webhook-endpoints
+  highlights: >-
+    Released create/read/update/delete for webhook subscriptions. At launch, partners had to request
+    subscription creation through a Google Form rather than self-serve.
+summary:
+  breaking_changes: 0
+  additions: 8
+  releases: 1
+  documentation: 1

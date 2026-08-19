@@ -1,0 +1,162 @@
+openapi: 3.1.0
+info:
+  title: Postscript Keywords API
+  description: The Postscript Partner API (v2) lets partners and Shopify shops manage SMS subscribers, send custom events
+    into Flows, send transactional and conversational messages, read opt-in keywords, configure webhook subscriptions, and
+    run TCPA compliance operations (unsubscribe, redact). Harvested verbatim from the per-operation OpenAPI definitions published
+    on https://developers.postscript.io/reference.
+  version: '2.0'
+  contact:
+    name: Postscript Developer Support
+    email: developersupport@postscript.io
+    url: https://developers.postscript.io
+  termsOfService: https://postscript.io/api-terms-of-service
+servers:
+- url: https://api.postscript.io
+security:
+- sec0: []
+tags:
+- name: Keywords
+  description: Read the opt-in keywords configured for a shop.
+paths:
+  /api/v2/keywords:
+    get:
+      summary: Get Keywords
+      description: Get a list of all active keywords for a shop.
+      operationId: get-keywords
+      parameters:
+      - name: X-Postscript-Shop-Token
+        in: header
+        description: Shop API Token. **Required for partners**. This header should be used *only* by partners. Shops should
+          include their API token in the *Authorization* header.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"keywords\": [{\n    \"created_at\": \"2021-10-01T03:17:09.306630\",\n    \"id\": \"kw_31afjew824892ks\"\
+                    ,\n    \"keyword\": \"YOUROCK\",\n    \"triggered_count\": 10,\n    \"updated_at\": \"2021-10-01T03:17:09.306639\"\
+                    \n  }]\n}"
+              schema:
+                type: object
+                properties:
+                  keywords:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          example: '2021-10-01T03:17:09.306630'
+                        id:
+                          type: string
+                          example: kw_31afjew824892ks
+                        keyword:
+                          type: string
+                          example: YOUROCK
+                        triggered_count:
+                          type: integer
+                          example: 10
+                          default: 0
+                        updated_at:
+                          type: string
+                          example: '2021-10-01T03:17:09.306639'
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"error\": \"You do not have permission to do that.\"\n}"
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: You do not have permission to do that.
+      deprecated: false
+      tags:
+      - Keywords
+  /api/v2/keywords/{id}:
+    get:
+      summary: Get Keyword
+      description: Get a Keyword by its ID
+      operationId: get-keyword
+      parameters:
+      - name: id
+        in: path
+        description: ID of the keyword you'd like to receive.
+        schema:
+          type: string
+        required: true
+      - name: X-Postscript-Shop-Token
+        in: header
+        description: Shop API Token. **Required for partners**. This header should be used *only* by partners. Shops should
+          include their API token in the *Authorization* header.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "  {\n    \"created_at\": \"2021-10-01T03:17:09.306630\",\n    \"id\": \"kw_31afjew824892ks\",\n\
+                    \    \"keyword\": \"YOUROCK\",\n    \"triggered_count\": 10,\n    \"updated_at\": \"2021-10-01T03:17:09.306639\"\
+                    \n  }"
+              schema:
+                type: object
+                properties:
+                  created_at:
+                    type: string
+                    example: '2021-10-01T03:17:09.306630'
+                  id:
+                    type: string
+                    example: kw_31afjew824892ks
+                  keyword:
+                    type: string
+                    example: YOUROCK
+                  triggered_count:
+                    type: integer
+                    example: 10
+                    default: 0
+                  updated_at:
+                    type: string
+                    example: '2021-10-01T03:17:09.306639'
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"error_code\": 3001,\n  \"error_message\": \"Could not find keyword matching that information\"\
+                    ,\n  \"success\": false\n}"
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: integer
+                    example: 3001
+                    default: 0
+                  error_message:
+                    type: string
+                    example: Could not find keyword matching that information
+                  success:
+                    type: boolean
+                    example: false
+                    default: true
+      deprecated: false
+      tags:
+      - Keywords
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: bearer

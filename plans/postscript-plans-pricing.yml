@@ -3,141 +3,171 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: Postscript
 providerId: postscript
+generated: '2026-08-13'
+method: searched
+source: https://postscript.io/pricing
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-08-13'
 tags:
   - SMS
   - Marketing
   - Messaging
   - E-commerce
   - Shopify
-  - RCS
-  - Subscribers
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+  - Pricing
+description: >-
+  Published Postscript SMS Marketing plans, read from the provider's pricing page on 2026-08-13.
+  This file replaces a 2026-05-04 scaffold whose Free/Professional/Enterprise request quotas were
+  invented defaults. Postscript does not price the API by call volume at all — plans are priced by
+  platform subscription plus per-message send rates, and API access for custom integrations is a
+  feature gated to the Professional tier and above.
+plan_count: 4
+currency: USD
+billing_period: month
+api_access_note: >-
+  The pricing page lists "API access for custom integrations" as a Professional-tier feature.
+  Postscript's developer docs add that since April 2022 custom API access for individual shops is
+  limited to enterprise plans, with grandfathered access for shops that had it before that date, and
+  that shops on any plan can still generate API keys for use with approved Integration Partners.
+  Integration Partners retain full API access regardless of the shop's plan.
+  Sources: https://postscript.io/pricing and
+  https://developers.postscript.io/docs/who-has-access-to-the-partner-api
 plans:
-  - id: postscript-free
-    name: Free
+  - id: postscript-starter
+    name: Starter
     type: freemium
-    description: Free entry tier for the Postscript API surface. Intended for evaluation, prototyping,
-      and low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
+    price: '0.00'
+    currency: USD
+    period: month
+    minimum_spend: '49.00'
+    audience: Brands just getting started with SMS
     entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains: []
+      - label: SMS send rate
+        name: sms_send
+        type: metered
+        metric: sms_message
+        price: '0.009'
         unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains: []
+        note: Plus carrier fees; US 50 states / Canada rates.
+      - label: MMS send rate
+        name: mms_send
+        type: metered
+        metric: mms_message
+        price: '0.045'
         unit: 1
-        price: '0.00'
-        userMultiplied: false
+        note: Plus carrier fees; US 50 states / Canada rates.
     elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Postscript API
-  - id: postscript-pro
+      - name: Campaigns and automations, and unlimited segments
+      - name: Dedicated toll-free number
+      - name: Subscriber acquisition tools, with 2 opt-in Keywords
+      - name: Branded short link subdomain
+    api_access: false
+  - id: postscript-growth
+    name: Growth
+    type: paid
+    price: '100.00'
+    currency: USD
+    period: month
+    audience: Brands building their SMS program
+    entries:
+      - label: SMS send rate
+        name: sms_send
+        type: metered
+        metric: sms_message
+        price: '0.008'
+        unit: 1
+        note: Plus carrier fees.
+      - label: MMS send rate
+        name: mms_send
+        type: metered
+        metric: mms_message
+        price: '0.030'
+        unit: 1
+        note: Plus carrier fees.
+    elements:
+      - name: Starter features
+      - name: Unlimited opt-in Keywords
+      - name: Live chat and email support
+    api_access: false
+  - id: postscript-professional
     name: Professional
     type: paid
-    description: Production tier for Postscript. Provides higher quotas, priority support, and access
-      to the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
+    price: '500.00'
+    currency: USD
+    period: month
+    audience: Brands scaling up SMS as a top revenue channel
+    highlighted: true
     entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
+      - label: SMS send rate
+        name: sms_send
         type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1000
-        price: TBD
-        userMultiplied: false
+        metric: sms_message
+        price: '0.007'
+        unit: 1
+        note: Plus carrier fees.
+      - label: MMS send rate
+        name: mms_send
+        type: metered
+        metric: mms_message
+        price: '0.024'
+        unit: 1
+        note: Plus carrier fees.
     elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Postscript API
+      - name: Growth features
+      - name: Enhanced Analytics
+      - name: Priority live chat/email support
+      - name: API access for custom integrations
+      - name: '"Powered by Postscript" removed from opt-in'
+    api_access: true
   - id: postscript-enterprise
     name: Enterprise
     type: enterprise
-    description: Custom-negotiated tier for Postscript. Includes dedicated capacity, contractual SLAs,
-      security review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
+    price: custom
+    currency: USD
+    period: month
+    audience: Brands ready to make SMS their #1 revenue channel
+    entries: []
     elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Postscript API
+      - name: Professional features
+      - name: Onboarding Launch Specialist
+      - name: Custom product recommendations in personalized messages
+      - name: Priority live chat support
+      - name: Data Warehouse Push
+    api_access: true
+add_ons:
+  - name: Postscript AI Plan
+    description: Bundle covering Brand Center, Infinity Testing and Shopper AI products.
+    price: contact sales
+  - name: Postscript Plus
+    description: Managed marketing service pairing the platform with in-house SMS strategists.
+    price: contact sales
+  - name: Fondue CashBack
+    description: Smart coupon alternative billed on redemption.
+    price: contact sales
+  - name: Designated short code
+    description: Dedicated short code passed through at the carrier fee.
+    price: '750.00'
+    period: month
+    note: Charged by the carriers and passed through by Postscript without markup.
+trial:
+  available: true
+  length_days: 30
+  description: >-
+    A $100 credit applied against message and carrier fees for the first 30 days. During the trial a
+    shop can build two keywords, set up automations, send campaigns, create segments, use
+    integrations and respond to customers. After the credit is exhausted, sends are billed at the
+    Starter package rate unless another package is selected.
+carrier_fees:
+  sms_average_usd: '0.00418'
+  mms_average_usd: '0.00841'
+  note: >-
+    Carrier surcharges are listed on the invoice at the exact carrier-defined amount with no markup.
+    Listed platform rates cover the US 50 states and Canada only; international sending is priced
+    separately.
+billing_notes:
+  - Incoming messages are not charged beyond carrier fees.
+  - Messages that fail to deliver are not charged.
+  - No contract is required; plans can be upgraded or downgraded at any time.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

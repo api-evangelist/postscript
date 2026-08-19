@@ -1,0 +1,33 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Postscript Keywords API
+  version: 1.0.0
+extends: openapi/postscript-keywords-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: apis.yml + repo artifacts; enhancements only, never applied to the harvested spec
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: postscript
+    x-apievangelist-harvest: Assembled from the per-operation OpenAPI 3.1.0 blocks Postscript publishes on developers.postscript.io/reference.
+      Postscript publishes no single assembled document.
+    x-apievangelist-artifacts:
+      authentication: authentication/postscript-authentication.yml
+      conventions: conventions/postscript-conventions.yml
+      errors: errors/postscript-error-codes.yml
+      rate_limits: rate-limits/postscript-rate-limits.yml
+      lifecycle: lifecycle/postscript-lifecycle.yml
+      data_model: data-model/postscript-data-model.yml
+      webhooks: asyncapi/postscript-webhooks.yml
+- target: $.info
+  update:
+    x-apievangelist-rate-limit: 15 requests per second per token; 429 with {"error_code":3002}; no rate-limit response
+      headers published
+- target: $.components.securitySchemes['sec0']
+  update:
+    x-apievangelist-note: Private API key as a bearer token. Partners additionally send the target shop key in X-Postscript-Shop-Token,
+      which Postscript declares as a plain header parameter rather than a securityScheme.
+- target: $.paths.*.*
+  update:
+    x-apievangelist-error-envelope: '{"error_code": <int>, "error_message": <string>, "success": false}'

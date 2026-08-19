@@ -1,0 +1,82 @@
+generated: '2026-08-13'
+method: probed
+source: https://developers.postscript.io/mcp
+status: published-gated
+server:
+  name: postscript-docs
+  transport: http
+  url: https://developers.postscript.io/mcp
+  platform: ReadMe
+deployment:
+  mode: remote
+  endpoint: https://developers.postscript.io/mcp
+  install: null
+  package: null
+  auth: unknown
+  verified: probed
+evidence:
+- method: GET
+  url: https://developers.postscript.io/mcp
+  http_status: 200
+  body: This URL can only be accessed with a MCP client.
+- method: POST
+  url: https://developers.postscript.io/mcp
+  payload: '{"jsonrpc":"2.0","id":1,"method":"initialize"}'
+  http_status: 401
+  body: '{"jsonrpc":"2.0","error":{"code":-32001,"message":"Authorization required"},"id":null}'
+- method: POST
+  url: https://developers.postscript.io/mcp
+  payload: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  http_status: 401
+  body: '{"jsonrpc":"2.0","error":{"code":-32001,"message":"Authorization required"},"id":null}'
+- method: POST
+  url: https://mcp.postscript.io/mcp
+  http_status: 404
+  body: 404 page not found
+notes: >-
+  A live Model Context Protocol endpoint is deployed on Postscript's own documentation host,
+  developers.postscript.io/mcp. A GET returns 200 with "This URL can only be accessed with a MCP
+  client"; a JSON-RPC initialize or tools/list returns HTTP 401 with MCP error code -32001
+  ("Authorization required"). It is the documentation MCP server that the ReadMe platform provisions
+  for a project — Postscript does not advertise it anywhere in its docs, llms.txt, or changelog, and
+  it is therefore a documentation-retrieval surface, not an API-execution surface. There is no
+  dedicated Postscript API MCP server: mcp.postscript.io/mcp returns 404 and api.postscript.io/mcp
+  returns the gateway's blanket 401.
+gating:
+  tools_list: gated
+  reason: >-
+    HTTP 401 with MCP error -32001. No WWW-Authenticate header is returned and
+    /.well-known/oauth-protected-resource and /.well-known/oauth-authorization-server both 404 on
+    that host, so the authorization server cannot be discovered anonymously. The real tool set and
+    per-tool inputSchema require authenticated introspection.
+  advertised_by_provider: false
+tools: []
+candidate_tools:
+  note: >-
+    NOT a published tool list. Derived one-to-one from the operationIds in the harvested Postscript
+    Partner API OpenAPI so an agent builder can see what an execution-grade MCP server over this API
+    would expose. These tools do not exist on the endpoint above.
+  status: candidate
+  method: derived
+  source: openapi/_original/postscript-partner-api-openapi.yml
+  tools:
+  - {name: get_subscribers, description: List and filter a shop's SMS subscribers, source_operation: 'openapi/postscript-subscribers-api-openapi.yml#get-subscribers'}
+  - {name: get_subscriber, description: Get a single subscriber by id, source_operation: 'openapi/postscript-subscribers-api-openapi.yml#get-subscriber'}
+  - {name: update_subscriber, description: Update a subscriber's fields and properties, source_operation: 'openapi/postscript-subscribers-api-openapi.yml#update-subscriber-by-id'}
+  - {name: create_custom_event, description: Send a custom event into Postscript Flows, source_operation: 'openapi/postscript-events-api-openapi.yml#create-custom-event'}
+  - {name: get_keywords, description: List a shop's opt-in keywords, source_operation: 'openapi/postscript-keywords-api-openapi.yml#get-keywords'}
+  - {name: get_keyword, description: Get a single opt-in keyword by id, source_operation: 'openapi/postscript-keywords-api-openapi.yml#get-keyword'}
+  - {name: send_message, description: Send a message to a subscriber, source_operation: 'openapi/postscript-messages-api-openapi.yml#create-message'}
+  - {name: get_message_request, description: Get the status of a message request, source_operation: 'openapi/postscript-messages-api-openapi.yml#get-message-request'}
+  - {name: get_sent_message, description: Get a sent message by id, source_operation: 'openapi/postscript-messages-api-openapi.yml#get-sent-message'}
+  - {name: list_webhook_subscriptions, description: List webhook subscriptions, source_operation: 'openapi/postscript-webhooks-api-openapi.yml#list-webhook-subscriptions'}
+  - {name: create_webhook_subscription, description: Subscribe an endpoint to a Postscript event, source_operation: 'openapi/postscript-webhooks-api-openapi.yml#create-webhook-subscription'}
+  - {name: get_webhook_subscription, description: Get a webhook subscription by id, source_operation: 'openapi/postscript-webhooks-api-openapi.yml#get-webhook-subscription'}
+  - {name: update_webhook_subscription, description: Update a webhook subscription, source_operation: 'openapi/postscript-webhooks-api-openapi.yml#update-webhook-subscription'}
+  - {name: delete_webhook_subscription, description: Delete a webhook subscription, source_operation: 'openapi/postscript-webhooks-api-openapi.yml#delete-webhook-subscription'}
+  - {name: get_webhook_signing_token, description: Fetch the token used to verify the Postscript-Signature header, source_operation: 'openapi/postscript-webhooks-api-openapi.yml#get-webhook-signing-token'}
+  - {name: get_example_event, description: Fetch a sample payload for a webhook event type, source_operation: 'openapi/postscript-webhooks-api-openapi.yml#example-event'}
+  - {name: test_shop_webhook, description: Trigger a test delivery to a shop's registered webhook, source_operation: 'openapi/postscript-webhooks-api-openapi.yml#test-shop-webhook'}
+  - {name: unsubscribe_subscriber, description: TCPA opt-out for a subscriber, source_operation: 'openapi/postscript-compliance-api-openapi.yml#unsubscribe'}
+  - {name: redact_subscriber, description: Redact a subscriber's personal data, source_operation: 'openapi/postscript-compliance-api-openapi.yml#redact'}
+  - {name: verify_identity, description: Verify which partner or shop the calling token belongs to, source_operation: 'openapi/postscript-identity-api-openapi.yml#verify-identity'}

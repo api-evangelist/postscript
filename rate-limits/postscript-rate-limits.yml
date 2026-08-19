@@ -3,89 +3,78 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Postscript
 providerId: postscript
+generated: '2026-08-13'
+method: searched
+source: https://developers.postscript.io/docs/rate-limits
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-08-13'
 tags:
   - SMS
   - Marketing
   - Messaging
   - E-commerce
   - Shopify
-  - RCS
-  - Subscribers
   - Rate Limiting
-  - Quotas
   - Throttling
-description: Machine-readable rate limit definitions for the Postscript API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+description: >-
+  Published rate limits for the Postscript Partner API v2, read from the provider's own rate-limits
+  documentation on 2026-08-13. This file replaces a 2026-05-04 scaffold whose per-tier request
+  quotas were invented defaults; Postscript publishes a single flat per-second ceiling that does not
+  vary by plan.
+limit_count: 1
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
+  note: >-
+    Postscript documents no rate-limit response headers. There is no RateLimit-*, X-RateLimit-* or
+    Retry-After signal on any response, so a client cannot read its remaining budget at runtime and
+    must detect exhaustion from the 429 alone. This is the single largest agent-readiness gap on this
+    API's runtime surface.
 responseCodes:
   throttled: 429
   quotaExceeded: 429
-  serviceUnavailable: 503
+errorEnvelope:
+  error_code: 3002
+  error_message: Rate limit exceeded
+  success: false
+  example: '{"error_code": 3002, "error_message": "Rate limit exceeded", "success": false}'
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
+  - name: Per-token request rate
+    scope: per-token
+    metric: requests_per_second
+    limit: 15
+    burst: null
+    timeFrame: second
+    window: second
     applies:
-      - Postscript API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Postscript API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Postscript API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Postscript API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Postscript API
+      - Postscript Partner API
+    scoping:
+      partner_token_only: 15 requests per second for that partner
+      shop_token_only: 15 requests per second for that shop
+      partner_and_shop_token: 15 requests per second for that partner/shop combination
+    note: >-
+      One flat ceiling published for all endpoints. It is not tiered by plan, and no monthly request
+      quota is published anywhere in Postscript's documentation.
 policies:
   - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+    description: >-
+      Postscript's published guidance is to watch for 429 status codes and retry on an exponential
+      backoff schedule with added randomness (jitter) so that retries do not synchronise.
+    source: https://developers.postscript.io/docs/rate-limits
+  - name: Contact on unexpected throttling
+    description: >-
+      Postscript asks integrators who see a sudden rise in rate-limited requests they believe to be
+      in error to contact support rather than engineer around it.
+    source: https://developers.postscript.io/docs/rate-limits
+not_published:
+  - monthly or daily request quotas
+  - per-endpoint limits
+  - burst allowances
+  - rate-limit response headers
+  - documented Retry-After value
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

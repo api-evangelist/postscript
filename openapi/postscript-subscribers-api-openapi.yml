@@ -1,177 +1,308 @@
 openapi: 3.1.0
 info:
-  title: Postscript Events Subscribers API
-  description: 'The Postscript API enables developers to manage SMS subscribers, send
-
-    custom events, and configure webhooks for the Postscript SMS marketing
-
-    platform. This OpenAPI definition captures a representative subset of
-
-    the public v2 API.
-
-    Derived from https://developers.postscript.io/.
-
-    '
-  version: 2.0.0
+  title: Postscript Subscribers API
+  description: The Postscript Partner API (v2) lets partners and Shopify shops manage SMS subscribers, send custom events
+    into Flows, send transactional and conversational messages, read opt-in keywords, configure webhook subscriptions, and
+    run TCPA compliance operations (unsubscribe, redact). Harvested verbatim from the per-operation OpenAPI definitions published
+    on https://developers.postscript.io/reference.
+  version: '2.0'
   contact:
-    name: Postscript
+    name: Postscript Developer Support
+    email: developersupport@postscript.io
     url: https://developers.postscript.io
+  termsOfService: https://postscript.io/api-terms-of-service
 servers:
 - url: https://api.postscript.io
-  description: Postscript production API
 security:
-- BearerAuth: []
+- sec0: []
 tags:
 - name: Subscribers
-  description: Manage SMS subscribers.
+  description: Read and update SMS subscribers for a shop.
 paths:
   /api/v2/subscribers:
     get:
-      tags:
-      - Subscribers
-      summary: List subscribers
-      description: Returns a paginated list of SMS subscribers.
-      operationId: listSubscribers
+      summary: Get Subscribers
+      description: Get a list of subscribers for a shop.
+      operationId: get-subscribers
       parameters:
-      - name: cursor
+      - name: created_at__eq
         in: query
+        description: Created at is equal to
         schema:
-          type: string
-      - name: limit
-        in: query
-        schema:
-          type: integer
-          default: 50
-      responses:
-        '200':
-          description: A paginated list of subscribers
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  subscribers:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Subscriber'
-                  cursor:
-                    type: string
-    post:
-      tags:
-      - Subscribers
-      summary: Create a subscriber
-      operationId: createSubscriber
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SubscriberCreate'
-      responses:
-        '201':
-          description: Subscriber created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Subscriber'
-  /api/v2/subscribers/{subscriber_id}:
-    parameters:
-    - $ref: '#/components/parameters/SubscriberId'
-    get:
-      tags:
-      - Subscribers
-      summary: Get a subscriber
-      operationId: getSubscriber
-      responses:
-        '200':
-          description: The subscriber record
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Subscriber'
-    patch:
-      tags:
-      - Subscribers
-      summary: Update a subscriber
-      operationId: updateSubscriber
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Subscriber'
-      responses:
-        '200':
-          description: Subscriber updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Subscriber'
-  /api/v2/subscribers/{subscriber_id}/unsubscribe:
-    parameters:
-    - $ref: '#/components/parameters/SubscriberId'
-    post:
-      tags:
-      - Subscribers
-      summary: Unsubscribe a subscriber
-      operationId: unsubscribeSubscriber
-      responses:
-        '200':
-          description: Subscriber unsubscribed
-components:
-  schemas:
-    Subscriber:
-      type: object
-      properties:
-        id:
-          type: string
-        phone_number:
-          type: string
-        email:
-          type: string
-          format: email
-        first_name:
-          type: string
-        last_name:
-          type: string
-        opt_in_status:
-          type: string
-        created_at:
           type: string
           format: date-time
-        properties:
-          type: object
-          additionalProperties: true
-    SubscriberCreate:
-      type: object
-      required:
-      - phone_number
-      properties:
-        phone_number:
+      - name: created_at__gt
+        in: query
+        description: Created at is greater than
+        schema:
           type: string
-        email:
+          format: date-time
+      - name: created_at__gte
+        in: query
+        description: Created at is greater than or equal to
+        schema:
           type: string
-          format: email
-        first_name:
+          format: date-time
+      - name: created_at__lt
+        in: query
+        description: Created at is less than
+        schema:
           type: string
-        last_name:
+          format: date-time
+      - name: created_at__lte
+        in: query
+        description: Created at is less than or equal to
+        schema:
           type: string
-        properties:
-          type: object
-          additionalProperties: true
-  parameters:
-    SubscriberId:
-      name: subscriber_id
-      in: path
-      required: true
-      schema:
-        type: string
+          format: date-time
+      - name: email__contains
+        in: query
+        description: Email contains
+        schema:
+          type: string
+      - name: email__eq
+        in: query
+        description: Email is equal to
+        schema:
+          type: string
+      - name: email__in
+        in: query
+        description: Email is in
+        schema:
+          type: array
+          items:
+            type: string
+      - name: page
+        in: query
+        description: Page number of results to start from
+        schema:
+          type: integer
+          format: int32
+      - name: phone_number__contains
+        in: query
+        description: Phone number contains
+        schema:
+          type: string
+      - name: phone_number__eq
+        in: query
+        description: Phone number is equal to
+        schema:
+          type: string
+      - name: phone_number__in
+        in: query
+        description: Phone number is in
+        schema:
+          type: array
+          items:
+            type: string
+      - name: shopify_customer_id__contains
+        in: query
+        description: Shopify customer id contains
+        schema:
+          type: string
+      - name: shopify_customer_id__eq
+        in: query
+        description: Shopify customer id is equal to
+        schema:
+          type: string
+      - name: shopify_customer_id__in
+        in: query
+        description: Shopify customer id is in
+        schema:
+          type: array
+          items:
+            type: string
+      - name: sort
+        in: query
+        description: 'Sorting Order. In `{field}__asc` or `{field}__desc` format. Valid fields:  `created_at`, `updated_at`,
+          `phone_number`, `shopify_customer_id`'
+        schema:
+          type: string
+      - name: updated_at__eq
+        in: query
+        description: Updated at is equal to
+        schema:
+          type: string
+          format: date-time
+      - name: updated_at__gt
+        in: query
+        description: Updated at is greater than
+        schema:
+          type: string
+          format: date
+      - name: updated_at__gte
+        in: query
+        description: Updated at is greater than or equal to
+        schema:
+          type: string
+          format: date-time
+      - name: updated_at__lt
+        in: query
+        description: Updated at is less than
+        schema:
+          type: string
+          format: date-time
+      - name: updated_at__lte
+        in: query
+        description: Updated at is less than or equal to
+        schema:
+          type: string
+          format: date-time
+      - name: X-Postscript-Shop-Token
+        in: header
+        description: Shop API Token. **Required for partners**. This header should be used *only* by partners. Shops should
+          include their API token in the *Authorization* header.
+        schema:
+          type: string
+      - name: ps_id__eq
+        in: query
+        description: Filters subscribers by their ps_id tracking ID. This ID is stored in the ps_id cookie for subscribers
+          on the front end and is used to uniquely identify a subscriber across sessions.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"page_info\": {\n    \"page\": 1,\n    \"total_pages\": 1\n  },\n  \"subscribers\": [\n  \
+                    \  {\n      \"created_at\": \"2019-08-24T14:15:22Z\",\n      \"data\": {},\n      \"email\": \"string\"\
+                    ,\n      \"id\": \"string\",\n      \"ps_id\": 42,\n      \"phone_number\": \"string\",\n      \"properties\"\
+                    : {\n         \"has_purchased\": True,\n         \"days_since_purchase\": 5,\n         \"categories\"\
+                    : [\"Beauty\", \"Home Goods\"],\n         \"birthday\": \"1991-01-01\"\n      },\n      \"shopify_customer_id\"\
+                    : 0,\n      \"subscriptions\": {\n      \t\"promotional\": {\n        \t\"can_send\": true\n      \t},\n\
+                    \      \t\"transactional\": {\n        \t\"can_send\": true\n      \t}\n    \t},\n      \"tags\": [\"\
+                    VIP\"],\n      \"updated_at\": \"2019-08-24T14:15:22Z\"\n    }\n  ]\n}"
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      tags:
+      - Subscribers
+  /api/v2/subscribers/{id}:
+    get:
+      summary: Get Subscriber
+      description: Get an individual subscriber for a shop.
+      operationId: get-subscriber
+      parameters:
+      - name: X-Postscript-Shop-Token
+        in: header
+        description: Shop API Token. **Required for partners**. This header should be used *only* by partners. Shops should
+          include their API token in the *Authorization* header.
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: The ID for the subscriber you'd like to get.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"created_at\": \"2019-08-24T14:15:22Z\",\n  \"data\": {},\n  \"email\": \"string\",\n  \"\
+                    id\": \"string\",\n  \"ps_id\": 42,\n  \"phone_number\": \"string\",\n \t\"properties\": {\n     \"has_purchased\"\
+                    : True,\n     \"days_since_purchase\": 5,\n     \"categories\": [\"Beauty\", \"Home Goods\"],\n     \"\
+                    birthday\": \"1991-01-01\"\n  },\n  \"shopify_customer_id\": 0,\n  \"subscriptions\": {\n    \"promotional\"\
+                    : {\n      \"can_send\": true\n    },\n    \"transactional\": {\n      \"can_send\": true\n    }\n  },\n\
+                    \  \"tags\": [\"VIP\"],\n  \"updated_at\": \"2019-08-24T14:15:22Z\"\n}"
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Subscribers
+    patch:
+      summary: Update Subscriber
+      description: Updates data for a given subscriber.
+      operationId: update-subscriber-by-id
+      parameters:
+      - name: id
+        in: path
+        description: ID of the subscriber you'd like to update.
+        schema:
+          type: string
+        required: true
+      - name: X-Postscript-Shop-Token
+        in: header
+        description: Shop API Token. **Required for partners**. This header should be used *only* by partners. Shops should
+          include their API token in the *Authorization* header.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email address for the subscriber. **Note:** when updating an email address, we will only update
+                    it if none previously existed on the subscriber or we haven't linked a Shopify customer to them yet. We
+                    also can only link a Shopify customer if they already exist, not retrospectively.
+                tags:
+                  type: array
+                  description: Tags you would like to add to the subscriber. **Note:** tags are additive, so whatever you
+                    include here will be added to the existing tags on a subscriber.
+                  items:
+                    type: string
+                properties:
+                  type: string
+                  description: 'Custom properties as key/value pairs. Values can be: strings, integers, string arrays, or
+                    ISO 8601 date(time). Subscribers can have up to 50 custom properties. If properties is unset or `null`,
+                    it will be ignored.'
+                  default: '{"key": "value"}'
+                  format: json
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"created_at\": \"2019-08-24T14:15:22Z\",\n  \"data\": {},\n  \"email\": \"string\",\n  \"\
+                    id\": \"string\",\n  \"phone_number\": \"string\",\n \t\"properties\": {\n     \"has_purchased\": True,\n\
+                    \     \"days_since_purchase\": 5,\n     \"categories\": [\"Beauty\", \"Home Goods\"],\n     \"birthday\"\
+                    : \"1991-01-01\"\n  },\n  \"shopify_customer_id\": 0,\n  \"subscriptions\": {\n    \"promotional\": {\n\
+                    \      \"can_send\": true\n    },\n    \"transactional\": {\n      \"can_send\": true\n    }\n  },\n \
+                    \ \"tags\": [\"VIP\"],\n  \"updated_at\": \"2019-08-24T14:15:22Z\"\n}"
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Subscribers
+components:
   securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-      description: 'Postscript uses bearer token authentication. Generate API keys from the
-
-        Postscript app under API Settings.
-
-        '
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: bearer

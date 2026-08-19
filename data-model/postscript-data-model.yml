@@ -1,0 +1,127 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/_original/postscript-partner-api-openapi.yml,
+  https://developers.postscript.io/reference/new-object-identifiers,
+  https://developers.postscript.io/docs/configuring-webhooks
+provider: Postscript
+api: Postscript Partner API v2
+identifier_scheme:
+  style: prefixed opaque string
+  documented_prefixes:
+    s_: subscriber
+    shop_: shop
+    im_: incoming message
+  undocumented:
+  - Webhook subscription ids are bare UUIDs (89066f0a-eb36-4ed8-b98c-606e6dcac715) with no prefix.
+  - No prefix is published for keyword, message request or sent message ids.
+  note: >-
+    v1 identifiers were unprefixed and derived from a shop's API keys, so rotating keys could break
+    an integration. v2 prefixes decouple the id from the credential. Legacy ids are still accepted on
+    v2 requests with no published sunset.
+entities:
+- name: Shop
+  id_prefix: shop_
+  description: A Shopify merchant account on Postscript. The tenant every other object hangs from.
+  operations: []
+  note: >-
+    There is no shop endpoint. A shop is addressed implicitly by which token authenticates the call,
+    or explicitly by a partner through X-Postscript-Shop-Token. GET /api/v2/me resolves the calling
+    token to its identity.
+- name: Subscriber
+  id_prefix: s_
+  description: An SMS subscriber belonging to a shop, with opt-in state, contact fields and free-form properties.
+  operations: [get-subscribers, get-subscriber, update-subscriber-by-id, unsubscribe, redact]
+  fields: [id, phone_number, email, shopify_customer_id, ps_id, created_at, updated_at, properties]
+  filterable: [created_at, updated_at, email, phone_number, shopify_customer_id, ps_id]
+- name: Keyword
+  id_prefix: null
+  description: An opt-in keyword a shop configures to attribute and trigger subscriptions from a given source.
+  operations: [get-keywords, get-keyword]
+  note: Read-only over the API. Keywords are created in the Postscript dashboard.
+- name: CustomEvent
+  id_prefix: null
+  description: >-
+    An event a partner or shop sends into Postscript for use in Flow Builder. Namespaced with the
+    sender's name on display. Carries an optional caller-supplied external_id.
+  operations: [create-custom-event]
+  fields: [type, subscriber_id, phone, email, occurred_at, properties, external_id]
+  note: Write-only. There is no endpoint to read events back.
+- name: MessageRequest
+  id_prefix: null
+  description: An asynchronous request to send a message; accepted with 202 and resolved later into a sent message.
+  operations: [create-message, get-message-request]
+- name: SentMessage
+  id_prefix: null
+  description: A message Postscript actually delivered, readable by id.
+  operations: [get-sent-message]
+- name: IncomingMessage
+  id_prefix: im_
+  description: An inbound text from a subscriber to a shop. Surfaced only through the shop.incoming_message webhook.
+  operations: []
+  fields: [id, subscriber_id, shop_id, is_opt_out, shopify_customer_id, from_number, created_at, body]
+- name: WebhookSubscription
+  id_prefix: null
+  description: A registration binding one event type to one callback URL, with optional custom headers.
+  operations: [list-webhook-subscriptions, create-webhook-subscription, get-webhook-subscription,
+    update-webhook-subscription, delete-webhook-subscription]
+  fields: [id, callback_url, event, headers, created_at, updated_at]
+relationships:
+- from: Subscriber
+  to: Shop
+  type: belongs_to
+  via: shop_id
+  evidence: shop_id appears on the incoming-message event_data and scoping is per shop token.
+- from: Subscriber
+  to: ShopifyCustomer
+  type: has_one
+  via: shopify_customer_id
+  evidence: shopify_customer_id is a filterable subscriber field and appears in webhook event_data.
+- from: CustomEvent
+  to: Subscriber
+  type: belongs_to
+  via: subscriber_id | phone | email
+  evidence: >-
+    create-custom-event resolves the subscriber by any one of three identifiers, so the join is
+    polymorphic rather than a single foreign key.
+- from: IncomingMessage
+  to: Subscriber
+  type: belongs_to
+  via: subscriber_id
+  evidence: event_data.subscriber_id on shop.incoming_message.
+- from: IncomingMessage
+  to: Shop
+  type: belongs_to
+  via: shop_id
+  evidence: event_data.shop_id on shop.incoming_message.
+- from: WebhookSubscription
+  to: Shop
+  type: belongs_to
+  via: authenticating token
+  evidence: Subscriptions are created and listed within the scope of the calling shop or partner/shop pair.
+- from: SentMessage
+  to: MessageRequest
+  type: belongs_to
+  via: message request id
+  evidence: >-
+    create-message returns 202 and get-message-request reads its status, while sent messages are read
+    from a separate collection. The linking field name is not published.
+- from: Subscriber
+  to: Keyword
+  type: belongs_to
+  via: keyword
+  evidence: >-
+    The "How to Add Subscribers Using the API" guide passes a keyword id when creating a subscriber
+    so the opt-in source is attributed.
+gaps:
+- >-
+  Postscript publishes no components.schemas anywhere — every response in the harvested fragments is
+  an inline object or a bare example string. There are no reusable named schemas to build a real
+  $ref graph from, so these entities were reconstructed from field names, id prefixes and the object
+  identifiers guide rather than read off the spec.
+- >-
+  Subscriber creation (POST /api/v2/subscribers) is demonstrated with a curl example in the guides
+  but has no reference page and no published OpenAPI fragment, so it is deliberately absent from the
+  harvested spec and from this model.
+- No id prefixes published for keywords, message requests or sent messages.
+render: null

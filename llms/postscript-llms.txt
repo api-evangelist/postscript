@@ -1,0 +1,46 @@
+---
+generated: '2026-08-13'
+method: searched
+source: https://developers.postscript.io/llms.txt
+http_status: 200
+---
+
+# Postscript Documentation
+
+> Partner API docs for Postscript.
+
+## Guides
+- [Introduction](https://developers.postscript.io/docs/getting-started.md): Welcome to the Postscript API Docs!
+- [Configuring Webhooks](https://developers.postscript.io/docs/configuring-webhooks.md): How to set up listening to webhooks from Postscript
+- [SDK API Reference](https://developers.postscript.io/docs/javascript-sdk-api-reference.md): The API Reference for our JavaScript SDK
+- [How to Trigger Browse Abandonment Events via SDK](https://developers.postscript.io/docs/how-to-trigger-browse-abandonment-events-via-sdk.md): Using our JavaScript SDK to trigger Browse Abandonment automation events.
+- [SDK Events](https://developers.postscript.io/docs/sdk-events.md): Reference for handling events emitted by the Postscript SDK
+- [Back In Stock Targeting](https://developers.postscript.io/docs/back-in-stock-targeting.md)
+- [How to Add Subscribers Using the API](https://developers.postscript.io/docs/how-to-add-subscribers-using-api.md): Collect subscribers using our API
+- [Can I send events via both V1 and V2 API versions?](https://developers.postscript.io/docs/can-i-send-events-via-both-v1-and-v2-api-versions.md)
+- [In the V1 API, Partners needed to install triggers for each partner before adding them to the store. Will we need to do the same for the V2 API?](https://developers.postscript.io/docs/in-the-v1-api-partners-needed-to-install-triggers-for-each-partner-before-adding-them-to-the-store-will-we-need-to-do-the-same-for-the-v2-api.md)
+- [Who has access to the Partner API?](https://developers.postscript.io/docs/who-has-access-to-the-partner-api.md)
+- [What phone number formats are acceptable?](https://developers.postscript.io/docs/what-phone-number-formats-are-acceptable.md)
+- [Are the Trigger Event Properties for an event only visible once that specific event exists in PostScript?](https://developers.postscript.io/docs/are-the-trigger-event-properties-for-an-event-only-visible-once-that-specific-event-exists-in-postscript.md)
+- [What is the best way to send a link as a merge tag?](https://developers.postscript.io/docs/what-is-the-best-way-to-send-a-link-as-a-merge-tag.md)
+- [Postscript Headless Integrations](https://developers.postscript.io/docs/postscript-headless-integrations.md)
+
+## API Reference
+- [Unsubscribe](https://developers.postscript.io/reference/unsubscribe.md): Opt outs subscribers from Postscript messaging.
+- [Redact](https://developers.postscript.io/reference/redact.md): Note: When passed an email, phone number, Shopify customer ID, or Postscript subscriber ID, this endpoint will also unsubscribe the subscriber if they have an active subscription
+- [Create Custom Event](https://developers.postscript.io/reference/create-custom-event.md): Send a Custom Event to use in Flows
+- [Get Subscribers](https://developers.postscript.io/reference/get-subscribers.md): Get a list of subscribers for a shop.
+- [Get Subscriber](https://developers.postscript.io/reference/get-subscriber.md): Get an individual subscriber for a shop.
+- [Update Subscriber](https://developers.postscript.io/reference/update-subscriber-by-id.md): Updates data for a given subscriber.
+
+## Changelog
+- [Custom Events API](https://developers.postscript.io/changelog/custom-events-beta-release.md)
+- [New: Collected Email Webhook Events](https://developers.postscript.io/changelog/new-collected-email-webhook-events.md)
+- [Spaces are now allowed in custom properties!](https://developers.postscript.io/changelog/spaces-are-now-allowed-in-custom-properties.md)
+- [Added Email Support for all Subscriber Endpoints!](https://developers.postscript.io/changelog/added-email-saving-support-in-v1-and-v2.md)
+- [Added email field to Subscriber Update endpoints](https://developers.postscript.io/changelog/added-email-field-to-subscriber-update-endpoints.md)
+- [Added Docs for Our JavaScript SDK!](https://developers.postscript.io/changelog/added-docs-for-our-javascript-sdk.md)
+- [v2.0 API is out of beta!](https://developers.postscript.io/changelog/v20-api-is-out-of-beta.md)
+- [Subscriber Lifecycle Webhook Events](https://developers.postscript.io/changelog/subscriber-lifecycle-webhook-events.md)
+- [Transactional Trigger Support](https://developers.postscript.io/changelog/transactional-trigger-support.md)
+- [Webhook Endpoints](https://developers.postscript.io/changelog/webhook-endpoints.md)

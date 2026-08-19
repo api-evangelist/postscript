@@ -1,0 +1,61 @@
+generated: '2026-08-13'
+method: derived
+source: mcp/postscript-mcp.yml + openapi/_original/postscript-partner-api-openapi.yml
+note: >-
+  Postscript's only live MCP surface is the ReadMe documentation server at
+  developers.postscript.io/mcp, and its tools/list is auth-gated (HTTP 401, MCP error -32001), so no
+  real tool names could be observed. Nothing is mapped speculatively: crosswalk[] is empty because
+  binding an unnamed tool to a REST operation would be a fabrication. What IS recorded is the honest
+  divergence — twenty published REST operations with no agent-callable tool in front of them, which
+  is the finding an agent builder needs.
+surfaces:
+  openapi:
+    files:
+    - openapi/postscript-subscribers-api-openapi.yml
+    - openapi/postscript-events-api-openapi.yml
+    - openapi/postscript-keywords-api-openapi.yml
+    - openapi/postscript-messages-api-openapi.yml
+    - openapi/postscript-webhooks-api-openapi.yml
+    - openapi/postscript-compliance-api-openapi.yml
+    - openapi/postscript-identity-api-openapi.yml
+    gated: false
+    note: Harvested from the per-operation OpenAPI blocks published on developers.postscript.io/reference.
+  graphql:
+    endpoint: null
+    gated: null
+    note: Postscript publishes no GraphQL surface.
+  mcp:
+    url: https://developers.postscript.io/mcp
+    gated: true
+    note: >-
+      Documentation-retrieval MCP provisioned by ReadMe. tools/list returns 401; the tool set and
+      per-tool inputSchema require authenticated introspection. It fronts the docs, not the API.
+crosswalk: []
+mcp_only: []
+rest_only:
+- capability: Subscribers
+  operations: [get-subscribers, get-subscriber, update-subscriber-by-id]
+- capability: Events
+  operations: [create-custom-event]
+- capability: Keywords
+  operations: [get-keywords, get-keyword]
+- capability: Messages
+  operations: [create-message, get-message-request, get-sent-message]
+- capability: Webhooks
+  operations: [list-webhook-subscriptions, create-webhook-subscription, get-webhook-subscription,
+    update-webhook-subscription, delete-webhook-subscription, get-webhook-signing-token,
+    example-event, test-shop-webhook]
+- capability: Compliance
+  operations: [unsubscribe, redact]
+- capability: Identity
+  operations: [verify-identity]
+coverage:
+  tools_named: 0
+  tools_bound: 0
+  mcp_only: 0
+  rest_operations_total: 20
+  rest_operations_with_tool: 0
+  note: >-
+    Zero of twenty REST operations are reachable from an agent through a Postscript-published MCP
+    tool. Candidate tool names for a future execution server are recorded under candidate_tools in
+    mcp/postscript-mcp.yml and are explicitly marked as not existing.

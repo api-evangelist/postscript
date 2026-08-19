@@ -1,0 +1,173 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/postscript-*-openapi.yml (harvested from https://developers.postscript.io/reference)
+format: proprietary
+rfc9457: false
+note: Derived from every 4xx/5xx response declared in the harvested Postscript Partner API OpenAPI. Postscript
+  declares only status codes and an empty object schema on its error responses — no problem+json media
+  type, no titles, no remediation. Titles below are the standard HTTP reason phrases for the declared
+  status, not provider-published names. The numeric error_code values that actually appear in the body
+  are catalogued separately in errors/postscript-error-codes.yml.
+envelope:
+  fields:
+  - error_code
+  - error_message
+  - success
+  example: '{"error_code": 3002, "error_message": "Rate limit exceeded", "success": false}'
+summary:
+  responses_declared: 20
+  by_status:
+    '400': 16
+    '403': 3
+    '404': 1
+  server_errors_declared: 0
+problems:
+- status: 403
+  title: Forbidden
+  description: '403'
+  content_type: application/json
+  source_operation: openapi/postscript-compliance-api-openapi.yml#redact
+  method: PATCH
+  path: /api/v2/compliance/redact
+- status: 403
+  title: Forbidden
+  description: '403'
+  content_type: application/json
+  source_operation: openapi/postscript-compliance-api-openapi.yml#unsubscribe
+  method: PATCH
+  path: /api/v2/compliance/unsubscribe
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-events-api-openapi.yml#create-custom-event
+  method: POST
+  path: /api/v2/events
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-identity-api-openapi.yml#verify-identity
+  method: GET
+  path: /api/v2/me
+- status: 403
+  title: Forbidden
+  description: '403'
+  content_type: application/json
+  source_operation: openapi/postscript-keywords-api-openapi.yml#get-keywords
+  method: GET
+  path: /api/v2/keywords
+- status: 404
+  title: Not Found
+  description: '404'
+  content_type: application/json
+  source_operation: openapi/postscript-keywords-api-openapi.yml#get-keyword
+  method: GET
+  path: /api/v2/keywords/{id}
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-messages-api-openapi.yml#create-message
+  method: POST
+  path: /api/v2/message_requests
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-messages-api-openapi.yml#get-message-request
+  method: GET
+  path: /api/v2/message_requests/{id}
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-messages-api-openapi.yml#get-sent-message
+  method: GET
+  path: /api/v2/sent_messages/{id}
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-subscribers-api-openapi.yml#get-subscribers
+  method: GET
+  path: /api/v2/subscribers
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-subscribers-api-openapi.yml#get-subscriber
+  method: GET
+  path: /api/v2/subscribers/{id}
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-subscribers-api-openapi.yml#update-subscriber-by-id
+  method: PATCH
+  path: /api/v2/subscribers/{id}
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-webhooks-api-openapi.yml#create-webhook-subscription
+  method: POST
+  path: /api/v2/webhooks
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-webhooks-api-openapi.yml#list-webhook-subscriptions
+  method: GET
+  path: /api/v2/webhooks
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-webhooks-api-openapi.yml#delete-webhook-subscription
+  method: DELETE
+  path: /api/v2/webhooks/{id}
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-webhooks-api-openapi.yml#get-webhook-subscription
+  method: GET
+  path: /api/v2/webhooks/{id}
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-webhooks-api-openapi.yml#update-webhook-subscription
+  method: PATCH
+  path: /api/v2/webhooks/{id}
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-webhooks-api-openapi.yml#example-event
+  method: GET
+  path: /api/v2/webhooks/example
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-webhooks-api-openapi.yml#test-shop-webhook
+  method: POST
+  path: /api/v2/webhooks/test
+- status: 400
+  title: Bad Request
+  description: '400'
+  content_type: application/json
+  source_operation: openapi/postscript-webhooks-api-openapi.yml#get-webhook-signing-token
+  method: GET
+  path: /api/v2/webhooks/token
+undeclared:
+- 429 Too Many Requests is documented in the rate-limits guide but is not declared on any operation in
+  the published spec fragments.
+- No 5xx response is declared on any operation.
+- 401 Unauthorized is returned by api.postscript.io for unauthenticated calls (observed 2026-08-13) but
+  is not declared on any operation.
+cross_references:
+  error_codes: errors/postscript-error-codes.yml
+  conventions: conventions/postscript-conventions.yml
