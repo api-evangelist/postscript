@@ -29,6 +29,16 @@ tags:
   - SMS
   - Marketing
   - Messaging
+  - E-Commerce
+  - Shopify
+  - RCS
+  - Subscribers
+  - Webhook
+  - Compliance
+tags_raw:
+  - SMS
+  - Marketing
+  - Messaging
   - E-commerce
   - Shopify
   - RCS
@@ -52,6 +62,14 @@ apis:
   humanURL: https://developers.postscript.io
   baseURL: https://api.postscript.io
   tags:
+  - SMS
+  - Subscribers
+  - Message
+  - Keywords
+  - Event
+  - Webhook
+  - Compliance
+  tags_raw:
   - SMS
   - Subscribers
   - Messages
@@ -97,6 +115,8 @@ apis:
   humanURL: https://developers.postscript.io/reference/create-custom-event
   baseURL: https://api.postscript.io
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -123,6 +143,9 @@ apis:
   humanURL: https://developers.postscript.io/reference/create-message
   baseURL: https://api.postscript.io
   tags:
+  - Message
+  - SMS
+  tags_raw:
   - Messages
   - SMS
   properties:
@@ -138,6 +161,9 @@ apis:
   humanURL: https://developers.postscript.io/docs/configuring-webhooks
   baseURL: https://api.postscript.io
   tags:
+  - Webhook
+  - Event
+  tags_raw:
   - Webhooks
   - Events
   properties:
