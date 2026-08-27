@@ -51,55 +51,11 @@ created: '2025-01-01'
 modified: '2026-08-13'
 specificationVersion: '0.23'
 apis:
-- aid: postscript:postscript-api
-  name: Postscript Partner API
-  description: >-
-    The Postscript Partner API v2 enables partners and Shopify shops to manage SMS subscribers, read
-    opt-in keywords, send custom events into Flow Builder, send SMS and MMS messages, configure
-    webhook subscriptions, and run TCPA compliance operations. Authentication is a private API key
-    sent as a bearer token, with partners delegating to a shop through the X-Postscript-Shop-Token
-    header.
-  humanURL: https://developers.postscript.io
-  baseURL: https://api.postscript.io
-  tags:
-  - SMS
-  - Subscribers
-  - Message
-  - Keywords
-  - Event
-  - Webhook
-  - Compliance
-  tags_raw:
-  - SMS
-  - Subscribers
-  - Messages
-  - Keywords
-  - Events
-  - Webhooks
-  - Compliance
-  properties:
-  - type: OpenAPI
-    url: openapi/_original/postscript-partner-api-openapi.yml
-  - type: Documentation
-    url: https://developers.postscript.io
-  - type: GettingStarted
-    url: https://developers.postscript.io/docs/getting-started
-  - type: Authentication
-    url: https://developers.postscript.io/docs/api-authentication
-  - type: RateLimits
-    url: https://developers.postscript.io/docs/rate-limits
-  - type: APIReference
-    url: https://developers.postscript.io/reference
-  - type: ChangeLog
-    url: https://developers.postscript.io/changelog
-  - type: Webhooks
-    url: https://developers.postscript.io/docs/configuring-webhooks
 - aid: postscript:postscript-subscribers-api
   name: Postscript Subscribers API
   description: >-
-    Read, filter, page and update a shop's SMS subscribers. Filters use suffixed operators
-    (__eq, __gt, __contains, __in) across created_at, updated_at, email, phone_number,
-    shopify_customer_id and ps_id.
+    Read, filter, page and update a shop's SMS subscribers. Filters use suffixed operators (__eq, __gt,
+    __contains, __in) across created_at, updated_at, email, phone_number, shopify_customer_id and ps_id.
   humanURL: https://developers.postscript.io/reference/get-subscribers
   baseURL: https://api.postscript.io
   tags:
@@ -125,7 +81,8 @@ apis:
     url: overlays/postscript-events-api-overlay.yaml
 - aid: postscript:postscript-keywords-api
   name: Postscript Keywords API
-  description: Read the opt-in keywords a shop has configured for subscriber acquisition and attribution.
+  description: >-
+    Read the opt-in keywords a shop has configured for subscriber acquisition and attribution.
   humanURL: https://developers.postscript.io/reference/get-keywords
   baseURL: https://api.postscript.io
   tags:
@@ -156,8 +113,8 @@ apis:
 - aid: postscript:postscript-webhooks-api
   name: Postscript Webhooks API
   description: >-
-    Create, read, update and delete webhook subscriptions, fetch the Postscript-Signature signing
-    token, retrieve example event payloads and trigger test deliveries.
+    Create, read, update and delete webhook subscriptions, fetch the Postscript-Signature signing token,
+    retrieve example event payloads and trigger test deliveries.
   humanURL: https://developers.postscript.io/docs/configuring-webhooks
   baseURL: https://api.postscript.io
   tags:
@@ -176,8 +133,8 @@ apis:
 - aid: postscript:postscript-compliance-api
   name: Postscript Compliance API
   description: >-
-    TCPA opt-out and data redaction for a subscriber, addressable by subscriber id, phone, email or
-    Shopify customer id.
+    TCPA opt-out and data redaction for a subscriber, addressable by subscriber id, phone, email or Shopify
+    customer id.
   humanURL: https://developers.postscript.io/reference/unsubscribe
   baseURL: https://api.postscript.io
   tags:
