@@ -170,6 +170,9 @@ apis:
   - type: Overlay
     url: overlays/postscript-identity-api-overlay.yaml
 common:
+  - type: CapabilityMap
+    url: capabilities/postscript-capability-edges.yml
+    name: Postscript Business Capability Map
   - type: AgenticAccess
     url: agentic-access/postscript-agentic-access.yml
   - type: TrustCenter
