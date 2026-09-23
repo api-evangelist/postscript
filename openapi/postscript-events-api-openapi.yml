@@ -1,10 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Postscript Events API
-  description: The Postscript Partner API (v2) lets partners and Shopify shops manage SMS subscribers, send custom events
-    into Flows, send transactional and conversational messages, read opt-in keywords, configure webhook subscriptions, and
-    run TCPA compliance operations (unsubscribe, redact). Harvested verbatim from the per-operation OpenAPI definitions published
-    on https://developers.postscript.io/reference.
+  title: Postscript Partner Events API
+  description: The Postscript Partner API (v2) lets partners and Shopify shops manage SMS subscribers, send custom events into Flows, send transactional and conversational messages, read opt-in keywords, configure webhook subscriptions, and run TCPA compliance operations (unsubscribe, redact). Harvested verbatim from the per-operation OpenAPI definitions published on https://developers.postscript.io/reference.
   version: '2.0'
   contact:
     name: Postscript Developer Support
@@ -27,8 +24,7 @@ paths:
       parameters:
       - name: X-Postscript-Shop-Token
         in: header
-        description: Shop API Token. **Required for partners**. This header should be used *only* by partners. Shops should
-          include their API token in the *Authorization* header.
+        description: Shop API Token. **Required for partners**. This header should be used *only* by partners. Shops should include their API token in the *Authorization* header.
         schema:
           type: string
       requestBody:
@@ -41,43 +37,31 @@ paths:
               properties:
                 type:
                   type: string
-                  description: 'The type of event that you are creating. This is the name of the event that will show in the
-                    Postscript application. **Note:** when creating this event, we will *automatically* prefix your partner/shop
-                    name in front of the event. For example, if sending an event called "OrderPlaced", we''ll show it in our
-                    UI as "[Your Partner/Shop Name] - OrderPlaced" to distinguish it from others of a similar name. We accept
-                    the follow characters in the value field: lowercase letters (a-z), uppercase letters (A-Z), digits (0-9),
-                    and underscores (_).'
+                  description: 'The type of event that you are creating. This is the name of the event that will show in the Postscript application. **Note:** when creating this event, we will *automatically* prefix your partner/shop name in front of the event. For example, if sending an event called "OrderPlaced", we''ll show it in our UI as "[Your Partner/Shop Name] - OrderPlaced" to distinguish it from others of a similar name. We accept the follow characters in the value field: lowercase letters (a-z), uppercase letters (A-Z), digits (0-9), and underscores (_).'
                 subscriber_id:
                   type: string
                   description: The ID of the subscriber that you are creating the event for.
                 phone:
                   type: string
-                  description: The phone number of the subscriber that you are creating the event for. E.164 format is recommended,
-                    but other formats will be accepted.
+                  description: The phone number of the subscriber that you are creating the event for. E.164 format is recommended, but other formats will be accepted.
                 email:
                   type: string
                   description: The email of the subscriber that you are creating the event for.
                 occurred_at:
                   type: string
-                  description: 'When the event occurred. This parameter is optional but allows you to set the exact time that
-                    the event occurred on your system. If it is not sent to us, we will just use the current time when we
-                    receive it. The following UTC time format is supported: %Y-%m-%d %H:%M:%S.%f'
+                  description: 'When the event occurred. This parameter is optional but allows you to set the exact time that the event occurred on your system. If it is not sent to us, we will just use the current time when we receive it. The following UTC time format is supported: %Y-%m-%d %H:%M:%S.%f'
                   format: date
                 properties:
                   type: object
-                  description: These are the properties of the event. These properties will be exposed in the Postscript platform
-                    for things like filtering and merge tags to merchants.
+                  description: These are the properties of the event. These properties will be exposed in the Postscript platform for things like filtering and merge tags to merchants.
                   properties:
                     key:
                       type: string
-                      description: Properties can be key:value pairs. We will attempt to choose the appropriate data type
-                        for the value depending on what you send us. We currently accept strings, booleans, integers, floats,
-                        and datetime strings.
+                      description: Properties can be key:value pairs. We will attempt to choose the appropriate data type for the value depending on what you send us. We currently accept strings, booleans, integers, floats, and datetime strings.
                       default: value
                 external_id:
                   type: string
-                  description: The unique id of the event on your system. This is an optional field. If a value is not provided,
-                    we will create a default id ourselves based on time of event received.
+                  description: The unique id of the event on your system. This is an optional field. If a value is not provided, we will create a default id ourselves based on time of event received.
       responses:
         '202':
           description: '202'

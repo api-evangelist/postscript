@@ -1,10 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Postscript Identity API
-  description: The Postscript Partner API (v2) lets partners and Shopify shops manage SMS subscribers, send custom events
-    into Flows, send transactional and conversational messages, read opt-in keywords, configure webhook subscriptions, and
-    run TCPA compliance operations (unsubscribe, redact). Harvested verbatim from the per-operation OpenAPI definitions published
-    on https://developers.postscript.io/reference.
+  title: Postscript Partner Identity API
+  description: The Postscript Partner API (v2) lets partners and Shopify shops manage SMS subscribers, send custom events into Flows, send transactional and conversational messages, read opt-in keywords, configure webhook subscriptions, and run TCPA compliance operations (unsubscribe, redact). Harvested verbatim from the per-operation OpenAPI definitions published on https://developers.postscript.io/reference.
   version: '2.0'
   contact:
     name: Postscript Developer Support
@@ -36,8 +33,7 @@ paths:
             application/json:
               examples:
                 Result:
-                  value: "{\n  \"resource_id\": \"shop_1234567abcde\",\n  \"resource_name\": \"Postscript\",\n  \"resource_type\"\
-                    : \"shop\"\n}"
+                  value: "{\n  \"resource_id\": \"shop_1234567abcde\",\n  \"resource_name\": \"Postscript\",\n  \"resource_type\": \"shop\"\n}"
               schema:
                 type: object
                 properties:
@@ -56,8 +52,7 @@ paths:
             application/json:
               examples:
                 Result:
-                  value: "{\n  \"errors\": [\n    {\n      \"ctx\": {},\n      \"log\": [\n        \"string\"\n      ],\n\
-                    \      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}"
+                  value: "{\n  \"errors\": [\n    {\n      \"ctx\": {},\n      \"log\": [\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}"
               schema:
                 type: object
                 properties:

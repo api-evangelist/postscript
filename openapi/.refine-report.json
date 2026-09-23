@@ -1,0 +1,32 @@
+{
+  "provider": "postscript",
+  "sources": [
+    "_original/postscript-partner-api-openapi.yml"
+  ],
+  "outputs": [
+    "postscript-compliance-api-openapi.yml",
+    "postscript-events-api-openapi.yml",
+    "postscript-identity-api-openapi.yml",
+    "postscript-keywords-api-openapi.yml",
+    "postscript-messages-api-openapi.yml",
+    "postscript-subscribers-api-openapi.yml",
+    "postscript-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "postscript-partner-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "postscript-compliance-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "postscript-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "postscript-identity-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "postscript-keywords-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "postscript-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "postscript-subscribers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "postscript-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
