@@ -173,6 +173,8 @@ apis:
   - type: Overlay
     url: overlays/postscript-identity-api-overlay.yaml
 common:
+  - type: FinOps
+    url: finops/postscript-finops.yml
   - type: CapabilityMap
     url: capabilities/postscript-capability-edges.yml
     name: Postscript Business Capability Map
