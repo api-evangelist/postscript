@@ -1,4 +1,4 @@
-# Postscript (postscript)
+# Postscript
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,75 +64,155 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Postscript is an SMS marketing and sales platform built for Shopify brands, providing list growth tools, campaign delivery, RCS messaging, and AI-driven shopping assistants alongside a developer API for building custom SMS experiences.
+Postscript is an SMS and RCS marketing platform built for Shopify brands, covering list growth, campaign and automation delivery, conversational messaging, AI shopping assistants and TCPA compliance. Its developer surface is the Partner API v2 at api.postscript.io, a twenty-operation REST API authenticated with private API keys, through which partners and enterprise shops read and update SMS subscribers, read opt-in keywords, push custom events into Flow Builder, send promotional, transactional and conversational messages, manage webhook subscriptions for shop and subscriber lifecycle events, and run compliance unsubscribe and redaction operations. A browser JavaScript SDK carries the onsite opt-in popups, the checkout consent checkbox and browse-behaviour event tracking.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/postscript/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/postscript/refs/heads/main/apis.yml)
+**Areas:** SMS · Marketing · Messaging · E-Commerce · Shopify · RCS · Subscribers · Webhook · Compliance
 
-## Scope
+## Postscript on APIs.io
 
-- **Type:** Index
+Everything profiled for Postscript is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/postscript/](https://apis.io/providers/postscript/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (7)
 
-- SMS
-- Marketing
-- Messaging
-- E-commerce
-- Shopify
-- RCS
-- Subscribers
+- [Postscript Subscribers API](https://apis.io/apis/postscript/postscript-subscribers-api/) — Read, filter, page and update a shop's SMS subscribers. Filters use suffixed operators (__eq, __gt, __contains, __in) across created_at, updated_at, email,…
+- [Postscript Events API](https://apis.io/apis/postscript/postscript-events-api/) — Send custom events for use in Postscript Flows and triggers.
+- [Postscript Keywords API](https://apis.io/apis/postscript/postscript-keywords-api/) — Read the opt-in keywords a shop has configured for subscriber acquisition and attribution.
+- [Postscript Messages API](https://apis.io/apis/postscript/postscript-messages-api/) — Send promotional, transactional or conversational SMS and MMS to an existing subscriber, and read the resulting message request and sent message.
+- [Postscript Webhooks API](https://apis.io/apis/postscript/postscript-webhooks-api/) — Create, read, update and delete webhook subscriptions, fetch the Postscript-Signature signing token, retrieve example event payloads and trigger test…
+- [Postscript Compliance API](https://apis.io/apis/postscript/postscript-compliance-api/) — TCPA opt-out and data redaction for a subscriber, addressable by subscriber id, phone, email or Shopify customer id.
+- [Postscript Identity API](https://apis.io/apis/postscript/postscript-identity-api/) — Verify which partner or shop the calling API token resolves to.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-01-01
-- **Modified:** 2026-04-28
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### Postscript API
+Event-driven and webhook contracts.
 
-The Postscript API enables developers to manage SMS subscribers, send messages, configure keywords, trigger events, and integrate the Postscript platform with external commerce and marketing systems.
+- [Postscript Webhooks](https://apis.io/asyncapis/postscript/postscript-webhooks/)
 
-- **Human URL:** [https://developers.postscript.io](https://developers.postscript.io)
+#### MCP servers (1)
 
-#### Tags
+Model Context Protocol servers that expose the API to agents.
 
-- SMS
-- Subscribers
-- Messages
-- Keywords
-- Events
-- Shop
+- [postscript-docs](https://apis.io/servers/postscript/postscript-docs/)
 
-#### Properties
+#### Agentic access (1)
 
-- [Documentation](https://developers.postscript.io)
-- [Getting Started](https://developers.postscript.io/docs/getting-started)
-- [Authentication](https://developers.postscript.io/docs/api-authentication)
-- [Rate Limits](https://developers.postscript.io/docs/rate-limits)
-- [API Reference](https://developers.postscript.io/reference)
-- [Changelog](https://developers.postscript.io/changelog)
-- [Webhooks](https://developers.postscript.io/docs/configuring-webhooks)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-## Common Properties
+- [Postscript Agentic Access](https://apis.io/agentic-access/postscript/postscript-agentic-access/)
 
-- [LinkedIn](https://www.linkedin.com/company/postscriptio)
+#### Overlays (7)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Postscript Compliance Api Overlay](https://apis.io/overlays/postscript/postscript-compliance-api-overlay/)
+- [Postscript Events Api Overlay](https://apis.io/overlays/postscript/postscript-events-api-overlay/)
+- [Postscript Identity Api Overlay](https://apis.io/overlays/postscript/postscript-identity-api-overlay/)
+- [Postscript Keywords Api Overlay](https://apis.io/overlays/postscript/postscript-keywords-api-overlay/)
+- [Postscript Messages Api Overlay](https://apis.io/overlays/postscript/postscript-messages-api-overlay/)
+- [Postscript Subscribers Api Overlay](https://apis.io/overlays/postscript/postscript-subscribers-api-overlay/)
+- [Postscript Webhooks Api Overlay](https://apis.io/overlays/postscript/postscript-webhooks-api-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Postscript Authentication](https://apis.io/security/postscript/postscript-authentication/)
+- [Postscript Domain Security](https://apis.io/security/postscript/postscript-domain-security/)
+- [Postscript Trust Center](https://apis.io/security/postscript/postscript-trust-center/)
+- [Postscript Vulnerability Disclosure](https://apis.io/security/postscript/postscript-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Postscript Plans Pricing](https://apis.io/plans/postscript/postscript-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Postscript Rate Limits](https://apis.io/rate-limits/postscript/postscript-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Postscript Finops](https://apis.io/finops/postscript/postscript-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://postscript.io)
 - [Documentation](https://developers.postscript.io)
-- [Getting Started](https://developers.postscript.io/docs/getting-started)
-- [Authentication](https://developers.postscript.io/docs/api-authentication)
-- [Rate Limits](https://developers.postscript.io/docs/rate-limits)
-- [Compliance](https://developers.postscript.io/docs/compliance)
-- [API Reference](https://developers.postscript.io/reference)
-- [Changelog](https://developers.postscript.io/changelog)
-- [SDK](https://developers.postscript.io/docs/javascript-sdk-api-reference)
-- [Integrations](https://developers.postscript.io/docs/how-to-use-zapier-with-our-api)
+- [Getting started](https://developers.postscript.io/docs/getting-started)
+- [API reference](https://developers.postscript.io/reference)
 - [Pricing](https://postscript.io/pricing)
-- [Blog](https://postscript.io/blog)
+- [Sign up](https://postscript.io/partners-signup)
 - [Support](https://help.postscript.io)
-- [L L Ms Txt](https://developers.postscript.io/llms.txt)
+- [Changelog](https://developers.postscript.io/changelog)
+- [Blog](https://postscript.io/blog)
+- [Security](https://postscript.io/security)
+- [Compliance](https://developers.postscript.io/docs/compliance)
+- [Terms of service](https://postscript.io/terms-of-service)
+- [Privacy policy](https://postscript.io/privacy)
+- [Status](https://status.postscript.io)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 60.9** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 62.2 |
+| Contract governance | 4.5 |
+| Operational transparency | 63.2 |
+| Developer ergonomics | 41.1 |
+| Access clarity | 88.2 |
+
+**Agent readiness 42.8** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 27.9** — Telecommunications
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/postscript/](https://apis.io/providers/postscript/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Postscript: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/postscript/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
