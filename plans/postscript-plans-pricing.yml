@@ -1,0 +1,120 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://postscript.io/pricing
+sources:
+- https://postscript.io/pricing
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T141238
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: tiered-subscription
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+published: true
+note: 'Average US carrier fees listed: SMS $0.00330, MMS $0.00799, Text RCS $0.0047, Media RCS $0.0087.
+  Free trial gives $100 credit for first 30 days.'
+plan_count: 6
+currency: USD
+plans:
+- name: Starter
+  price_text: $0/mo.
+  price: 0
+  currency: USD
+  period: month
+  included_quota: $49 monthly minimum spend; Campaigns and automations, unlimited segments, dedicated
+    toll-free number, 2 opt-in Keywords, branded short link subdomain
+  overage: $0.009/SMS, $0.045/MMS + Carrier fees*
+- name: Growth
+  price_text: $100/mo.
+  price: 100
+  currency: USD
+  period: month
+  included_quota: Starter features, plus unlimited opt-in Keywords, live chat and email support
+  overage: $0.008/SMS, $0.03/MMS + Carrier fees*
+- name: Professional
+  price_text: $500/mo.
+  price: 500
+  currency: USD
+  period: month
+  included_quota: Growth features, plus Enhanced Analytics, priority support, API access, 'Powered by
+    Postscript' removed
+  overage: $0.007/SMS, $0.024/MMS + Carrier fees*
+- name: Enterprise
+  price_text: Contact us
+  period: none
+  included_quota: Professional features, plus dedicated CSM, custom product recommendations, Data Warehouse
+    Push, option to add RCS
+- name: Postscript AI Plan
+  price_text: $699/mo.
+  price: 699
+  currency: USD
+  period: month
+  included_quota: Brand Center, Infinity Testing, Shopper
+  overage: 'Per Message Rates: $0.003 – $0.30 (depending on the product and message type)'
+- name: Designated short code
+  price_text: $750/month
+  price: 750
+  currency: USD
+  period: month
+  unit: short code
+  included_quota: Dedicated short code through carriers, passed through at cost
+rate_limit_statements:
+- Postscript allows 160 characters per SMS message without emojis, and 70 characters per SMS message with
+  emojis
+- Postscript allows up to 1,600 characters per MMS message with or without emojis
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - metered
+  - subscription
+  units: []
+  plans:
+  - name: Starter
+    access: other
+    model: metered
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Growth
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Professional
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Postscript AI Plan
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Designated short code
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
