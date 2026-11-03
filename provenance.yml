@@ -50,7 +50,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-10-31T095417.yml:
+  kin/checks-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -105,6 +105,15 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-10-31T095417.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-01T171331.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-01T200237.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/postscript-lifecycle.yml:
@@ -168,6 +177,9 @@ artifacts:
   packages/postscript-packages.yml:
     method: searched
     evidence: declared in the artifact
+  patterns/postscript-patterns.yml:
+    method: derived
+    evidence: declared in the artifact
   plans/postscript-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
@@ -176,6 +188,9 @@ artifacts:
     evidence: no authorship recorded
   rate-limits/postscript-rate-limits.yml:
     method: searched
+    evidence: declared in the artifact
+  rules/postscript-rules.yml:
+    method: generated
     evidence: declared in the artifact
   sandbox/postscript-sandbox.yml:
     method: searched
@@ -205,6 +220,9 @@ artifacts:
     method: generated
     evidence: declared in the artifact
   skills/postscript-unsubscribe-and-redact.md:
+    method: generated
+    evidence: declared in the artifact
+  sla/postscript-sla.yml:
     method: generated
     evidence: declared in the artifact
   well-known/postscript-well-known.yml:
